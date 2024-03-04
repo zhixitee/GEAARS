@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load events_template_tags %}
+
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>
+            Events - 
+            {% block title_block %}
+                How to Tango with Django!
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>
+        {% block body_block %}
+        {% endblock %}
+        </div>
+        <div>
+            {% block sidebar_block %}
+                {% get_category_list %}
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <ul>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'events:restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'events:logout' %}">Logout</a></li>
+                <li><a href="{% url 'events:add_category' %}">Add a New Category</a></li>
+            {% else %}
+                <li><a href="{% url 'events:register' %}">Sign Up</a></li>
+                <li><a href="{% url 'events:login' %}">Login</a></li>
+            {% endif %}
+                <li><a href="{% url 'events:about' %}">About</a></li>
+                <li><a href="{% url 'events:index' %}">Index</a></li>
+        </div>
+    </body>
+</html>
