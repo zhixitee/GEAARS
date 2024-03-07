@@ -2,19 +2,19 @@
 {% load staticfiles %}
 
 {% block title_block %}
-Homepage
+Events
 {% endblock %}
 
 {% block body_block %}
-<h1>Events says...</h1>
+<h1>Events For You</h1>
 <div>
     {% if user.is_authenticated %}
-    howdy {{ user.username }}!
+    Welcome {{ user.username }}, to the Glasgow Events and Arts Review Page !
     {% else %}
-    hey there partner!
+    Welcome to the Glasgow Events and Arts Review Page !
     {% endif %}
     <br />
-    <strong>{{ boldmessage }}</strong><br />
+
 </div>
 
 <div>

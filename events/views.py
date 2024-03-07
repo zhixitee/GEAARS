@@ -7,22 +7,16 @@ from events.models import Category, Page
 from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 
-def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    page_list = Page.objects.order_by('-views')[:5]
-
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = page_list
+def events(request):
     visitor_cookie_handler(request)
-    return render(request, 'events/index.html', context=context_dict)
+    return render(request, 'events/events.html')
 
 def about(request):
-    context_dict = {}
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    return render(request, 'events/about.html', context=context_dict)
+    return render(request, 'events/about.html')
+
+def map(Request):
+    return render(Request, 'events/map.html')
 
 def show_category(request, category_name_slug):
     context_dict = {}
@@ -137,7 +131,7 @@ def restricted(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('events:index'))
+    return redirect(reverse('events:events'))
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)

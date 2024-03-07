@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+
 class Category(models.Model):
     NAME_MAX_LENGTH = 128
 
@@ -45,3 +46,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+
+

@@ -9,7 +9,7 @@
 <h1>Register for Events</h1>
 {% if registered %}
 Events says: <strong>thank you for registering!</strong>
-<a href="{% url 'events:index' %}">Return to the homepage.</a><br />
+<a href="{% url 'events:events' %}">Return to the homepage.</a><br />
 {% else %}
 Events says: <strong>register here!</strong><br />
 <form id="user_form" method="post" action="{% url 'events:register' %}" enctype="multipart/form-data">
