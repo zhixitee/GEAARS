@@ -141,6 +141,20 @@ def user_login(request):
     else:
         return render(request, 'events/login.html')
     
+
+@login_required
+def user_events_list(request):
+    # Get the current user's events
+    user_events = UserEvent.objects.filter(user=request.user).select_related('event')
+
+    # Organize data to pass to the template
+    context = {
+        'user_events': user_events,
+    }
+
+    # Render the template
+    return render(request, 'events/user_events_list.html', context)
+
 @login_required
 def restricted(request):
     return render(request, 'events/restricted.html')
