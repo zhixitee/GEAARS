@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from events.models import Category, Page
+from events.models import Category, Page, Event, UserEvent
 from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
 from .forms import EventForm 
