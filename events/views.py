@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from events.models import Category, Page
 from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
+from .forms import EventForm 
 
 def events(request):
     visitor_cookie_handler(request)
@@ -34,6 +35,22 @@ def show_category(request, category_name_slug):
     return render(request, 'events/category.html', context=context_dict)
 
 @login_required
+def add_event(request):
+    form = EventForm()  # Instantiate an empty form
+
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+
+        if form.is_valid():
+            new_event = form.save(commit=False)
+            new_event.organizer = request.user  # Set the organizer to the current user
+            new_event.save()
+            return redirect('events:events')  # Adjust the redirect location as necessary
+
+    return render(request, 'events/add_event.html', {'form': form})
+
+
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -42,7 +59,7 @@ def add_category(request):
 
         if form.is_valid():
             form.save(commit=True)
-            return redirect(reverse('events:index'))
+            return redirect(reverse('events:events'))
         else:
             print(form.errors)
     
@@ -56,7 +73,7 @@ def add_page(request, category_name_slug):
         category = None
     
     if category is None:
-        return redirect(reverse('events:index'))
+        return redirect(reverse('events:events'))
 
     form = PageForm()
 
@@ -115,7 +132,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('events:index'))
+                return redirect(reverse('events:events'))
             else:
                 return HttpResponse("Your events account is disabled.")
         else:

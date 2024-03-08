@@ -1,11 +1,11 @@
 from django import forms
 from django.contrib.auth.models import User
-from events.models import Page, Category, UserProfile
+from events.models import Page, Category, UserProfile, Event
 
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
-                        help_text="Please enter the category name.")
+                           help_text="Please enter the category name.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -48,4 +48,15 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture',)
+        fields = ('picture',)
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        # Add or remove fields based on your Event model
+        fields = ['title', 'description', 'date', 'location', 'organizer']
+        widgets = {
+            # Ensures HTML5 datetime-picker is used
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }

@@ -1,0 +1,14 @@
+<!-- In templates/events/user_events_list.html -->
+
+{% extends 'events/base.html' %}
+
+{% block content %}
+    <h2>My Events</h2>
+    <ul>
+        {% for user_event in user_events %}
+            <li>{{ user_event.event.title }} - {{ user_event.status }} on {{ user_event.timestamp }}</li>
+        {% empty %}
+            <li>No events found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

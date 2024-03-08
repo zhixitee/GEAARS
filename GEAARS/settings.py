@@ -33,6 +33,7 @@ LOGIN_URL = 'events:login'
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
