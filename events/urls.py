@@ -15,4 +15,8 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('add_event/', views.add_event, name='add_event'),
     path('my_events/', views.user_events_list, name='user_events_list'),
+    path('david_guetta_event', views.choosenEvent, name='david_guetta_event'),
+    path('kevin_heart_event', views.choosenEvent, name='kevin_heart_event'),
+    path('maya_deliah_event', views.choosenEvent, name='maya_deliah_event'),
+    path('peach_pit_event', views.choosenEvent, name= 'peach_pit_event'),
 ]

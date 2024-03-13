@@ -19,6 +19,9 @@ def about(request):
 def map(Request):
     return render(Request, 'events/map.html')
 
+def choosenEvent(Request):
+    return render(Request, 'events/choosenEvent.html')
+
 def show_category(request, category_name_slug):
     context_dict = {}
 

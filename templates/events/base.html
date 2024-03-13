@@ -32,7 +32,7 @@
             color: black;
         }
 
-        /* Clear floats after the navbar */
+        
         .navbar::after {
             content: "";
             clear: both;
@@ -42,11 +42,20 @@
         body {
             background-color: #5fdaff
         }
+
+        .logo-image{
+            width: 50px;
+            height: auto;
+            left: 0px;
+            position: ;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="navbar">
+    <img src="{% static 'images/Logo.jpg' %}" alt="GEAARS" class = "logo-image" />
     <a href="{% url 'events:about' %}">About</a>
     <a href="{% url 'events:events' %}">Events</a>
     <a href="{% url 'events:map' %}">Map</a>

@@ -6,6 +6,52 @@ Events
 {% endblock %}
 
 {% block body_block %}
+<div>
+
+
+
+</div>
+
+
+<style>
+
+    .image-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; 
+        gap: 20px; 
+        max-width: 1200px; 
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .image-container {
+        flex: 0 0 calc(50% - 20px);
+        height: 200px; 
+        margin-bottom: 20px; 
+        display: flex;
+        justify-content: flex-start; 
+        align-items: center; 
+    }
+    
+    .image-container img {
+        width: auto; 
+        max-width: 100%; 
+        max-height: 200px;
+        object-fit: contain; 
+    }
+
+    .text-box {
+    margin-left: -250px; /* Add space between the image and the text */
+    }
+    
+    @media (max-width: 768px) {
+        .image-container {
+            flex: 0 0 100%; 
+        }
+    }
+    </style>
+
 <h1>Events For You</h1>
 <div>
     {% if user.is_authenticated %}
@@ -16,31 +62,43 @@ Events
     <br />
 
 </div>
-
-<div>
-    <h2>Most Liked Categories</h2>
-    {% if categories %}
-    <ul>
-        {% for category in categories %}
-        <li><a href="{% url 'events:show_category' category.slug %}">{{ category.name }}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>There are no categories present.</strong>
-    {% endif %}
+<div class="image-grid">
+    <div class="image-container">
+        <a href="{% url 'events:david_guetta_event' %}">
+            <img src="{% static 'images/DavidGuetta.jpg' %}" alt="David Guetta" />
+        </a>
+    </div>
+    <div class="text-box">
+        <h3>David Guetta</h3>
+        <p>Some details about the event...</p>
+    </div>
+    <div class="image-container">
+        <a href="{% url 'events:kevin_heart_event' %}">
+            <img src="{% static 'images/KevinHeart.jpg' %}" alt="Kevin Heart" />
+        </a>
+    </div>
+    <div class="text-box">
+        <h3>Kevin Heart</h3>
+        <p>Some details about the event...</p>
+    </div>
+    <div class="image-container">
+        <a href="{% url 'events:maya_deliah_event' %}">
+            <img src="{% static 'images/MayaDeliah.jpg' %}" alt="Maya Deliah" />
+        </a>
+    </div>
+    <div class="text-box">
+        <h3>Maya Deliah</h3>
+        <p>Some details about the event...</p>
+    </div>
+    <div class="image-container">
+        <a href="{% url 'events:peach_pit_event' %}">
+            <img src="{% static 'images/PeachPit.jpg' %}" alt="Peach Pit" />
+        </a>
+    </div>
+    <div class="text-box">
+        <h3>Peach Pit</h3>
+        <p>Some details about the event...</p>
+    </div>
 </div>
 
-<div>
-    <h2>Most Viewed Pages</h2>
-    {% if pages %}
-    <ul>
-        {% for page in pages %}
-        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>There are no pages present.</strong>
-    {% endif %}
-</div>
-<img src="{% static 'images/events.jpg' %}" alt="Picture of Events" />
 {% endblock %}
