@@ -1,14 +1,45 @@
-{% extends 'events/base.html' %}
-{% load staticfiles %}
+{% extends 'events/base.html' %} 
+{% load staticfiles %} 
 
 {% block title_block %}
-    Mapss
-{% endblock %}
+Maps 
+{% endblock %} 
 
 {% block body_block %}
-<h1>Events says...</h1>
-<div>
-    here is the Map page. <br />
+    <h1>The GEAARS Event Map</h1>
+    <div>
+        Here you can explore all that Glasgow has to offer 
+        <br />
+    </div>
 
-<img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
+<!-- Container for the map -->
+    <div 
+    id="map" style="height: 400px; width: 100%">
+    </div>
+    {% endblock %} 
+    
+    {% block javascript %}
+    <script>
+    // Function to initialize the map
+    function initMap() {
+        var glasgowcentralLatLng = {long: 55.85943463723302,lat: -4.256705753872978,}; // Glasgow Central Coordinates
+        var kingtutsLatLng = { long: 55.8625967562286, lat: -4.264986115540963 };
+        var ovohydroLatLng = { long: 55.85972303446611, lat: -4.285458255827642 };
+        var barrowLatLng = { long: 55.85536512400785, lat: -4.236643115351418 };
+        var bellahoustonLatLng = {long: 55.84642667620242, lat: -4.313516156358837,
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+        center: glasgowcentralLatLng,
+        zoom: 12,
+        });
+
+        // Markers, listneners and info for venues. 
+        
+
+
+
+
+    }
+    </script>
 {% endblock %}

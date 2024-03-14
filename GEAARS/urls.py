@@ -24,4 +24,6 @@ urlpatterns = [
 path('', views.events, name='events'),
 path('events/', include('events.urls')),
 path('admin/', admin.site.urls),
+path('map/', views.map, name='map'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
