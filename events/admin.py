@@ -1,18 +1,20 @@
 from django.contrib import admin
-from events.models import Category, Page, Event, UserEvent
-from events.models import UserProfile
-# Register your models here.
-
-class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url')
-
+from .models import Category, Event, UserEvent, UserProfile
 
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slugs': ('name',)}
+    prepopulated_fields = {'slug': ('name',)}
 
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date', 'location', 'organizer', 'slug')
+    prepopulated_fields = {'slug': ('title',)}  # Automatically generate the slug from the title
 
-admin.site.register(Category)
-admin.site.register(Page, PageAdmin)
-admin.site.register(UserProfile)
-admin.site.register(Event)
-admin.site.register(UserEvent)
+class UserEventAdmin(admin.ModelAdmin):
+    list_display = ('user', 'event', 'status', 'timestamp')
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'picture')
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Event, EventAdmin)
+admin.site.register(UserEvent, UserEventAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)

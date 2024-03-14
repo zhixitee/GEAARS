@@ -1,104 +1,88 @@
 {% extends 'events/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Events
 {% endblock %}
 
 {% block body_block %}
-<div>
-
-
-
-</div>
-
-
 <style>
-
     .image-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
         gap: 20px; 
-        max-width: 1200px; 
-        margin-left: auto;
-        margin-right: auto;
+        justify-content: center; 
+        max-width: 600px; 
+        margin: auto; 
     }
     
-    .image-container {
-        flex: 0 0 calc(50% - 20px);
-        height: 200px; 
-        margin-bottom: 20px; 
+    .card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        overflow: hidden;
         display: flex;
-        justify-content: flex-start; 
-        align-items: center; 
+        flex-direction: column; 
+        height: 250px; 
     }
-    
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
     .image-container img {
-        width: auto; 
-        max-width: 100%; 
-        max-height: 200px;
-        object-fit: contain; 
+        width: 100%; 
+        height: 150px; 
+        object-fit: cover; 
     }
 
     .text-box {
-    margin-left: -250px; /* Add space between the image and the text */
+        text-align: center; 
+        padding: 10px; 
+        flex-grow: 1; 
     }
     
     @media (max-width: 768px) {
-        .image-container {
-            flex: 0 0 100%; 
+        .image-grid {
+            grid-template-columns: 1fr; 
+            max-width: 300px; 
+        }
+
+        .card {
+            height: auto; 
+        }
+
+        .image-container img {
+            height: auto; 
         }
     }
-    </style>
+</style>
 
 <h1>Events For You</h1>
 <div>
     {% if user.is_authenticated %}
-    Welcome {{ user.username }}, to the Glasgow Events and Arts Review Page !
+        Welcome {{ user.username }}, to the Glasgow Events and Arts Review Page!
     {% else %}
-    Welcome to the Glasgow Events and Arts Review Page !
+        Welcome to the Glasgow Events and Arts Review Page!
     {% endif %}
     <br />
-
 </div>
+
 <div class="image-grid">
-    <div class="image-container">
-        <a href="{% url 'events:david_guetta_event' %}">
-            <img src="{% static 'images/DavidGuetta.jpg' %}" alt="David Guetta" />
-        </a>
-    </div>
-    <div class="text-box">
-        <h3>David Guetta</h3>
-        <p>Some details about the event...</p>
-    </div>
-    <div class="image-container">
-        <a href="{% url 'events:kevin_heart_event' %}">
-            <img src="{% static 'images/KevinHeart.jpg' %}" alt="Kevin Heart" />
-        </a>
-    </div>
-    <div class="text-box">
-        <h3>Kevin Heart</h3>
-        <p>Some details about the event...</p>
-    </div>
-    <div class="image-container">
-        <a href="{% url 'events:maya_deliah_event' %}">
-            <img src="{% static 'images/MayaDeliah.jpg' %}" alt="Maya Deliah" />
-        </a>
-    </div>
-    <div class="text-box">
-        <h3>Maya Deliah</h3>
-        <p>Some details about the event...</p>
-    </div>
-    <div class="image-container">
-        <a href="{% url 'events:peach_pit_event' %}">
-            <img src="{% static 'images/PeachPit.jpg' %}" alt="Peach Pit" />
-        </a>
-    </div>
-    <div class="text-box">
-        <h3>Peach Pit</h3>
-        <p>Some details about the event...</p>
-    </div>
+    {% for event in events %}
+        <div class="card">
+            <a href="{% url 'events:choosen_event' event_slug=event.slug %}">
+                <div class="image-container">
+                    <img src="{% static 'images/'|add:event.slug|add:'.jpg' %}" alt="{{ event.title }}" />
+                </div>
+                <div class="text-box">
+                    <h3>{{ event.title }}</h3>
+                    <p>{{ event.description|truncatewords:20 }}</p>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
 </div>
-
 {% endblock %}
