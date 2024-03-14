@@ -51,7 +51,6 @@
         .container, .footer {
             animation: fadeIn 1.5s ease-out;
         }
-        /* Additional styles for search bar and filter */
         .search-bar {
             margin-bottom: 20px;
         }
@@ -64,7 +63,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="{% url 'events:events' %}">
-        <img src="{% static 'images/Logo.jpg' %}" alt="GEAARS" class="logo-image">
+        <img src="{% static 'images/GEAARS.jpg' %}" alt="GEAARS" class="logo-image">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -95,7 +94,6 @@
                 <option selected>Filter by...</option>
                 <option value="date">Date</option>
                 <option value="popularity">Popularity</option>
-                <!-- Add more filters as needed -->
             </select>
         </form>
     </div>

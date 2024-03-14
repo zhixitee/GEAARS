@@ -6,7 +6,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'location', 'organizer', 'slug')
-    prepopulated_fields = {'slug': ('title',)}  # Automatically generate the slug from the title
+    prepopulated_fields = {'slug': ('title',)}  
 
 class UserEventAdmin(admin.ModelAdmin):
     list_display = ('user', 'event', 'status', 'timestamp')

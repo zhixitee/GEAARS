@@ -30,5 +30,5 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ['title', 'description', 'date', 'location', 'organizer']
         widgets = {
-            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),  # Ensures HTML5 datetime-picker is used
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),  
         }
