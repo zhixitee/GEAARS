@@ -9,15 +9,21 @@ Welcome to WAD group project setup by team 8D . This is a Event review website h
 
 ## Installation Instructions
 1. Change directory to GEAARS folder where it contains manage.py file (command - ls GEAARS) this will tell about the contents of the folder.
-2. conda create --name events (This command creates the working environment here our environment is events)
-3. conda activate events (The command to activate the environment)
-4. pip install django==2.2.28  (This version of django is used in this website development) 
-5. pip install pillow (This format is used to manipulate and save many different image formats)
-6. python manage.py makemigrations (This command is used to automatically make migrations to files that have been changed to make models    and updating the database schema)
-7. python manage.py migrate  (This command makes sure that the schema matches the current state of the current models,managing the          database changes throughout the lifecycle.)
-8. python populate_events.py  (This command makes sure that the database is populated properly)
-9. python manage.py runserver  (For running the server )
-
+2. conda create --name events                                                                                                               (This command creates the working environment here our environment is events)
+3. conda activate events 
+   (The command to activate the environment)
+4. pip install django==2.2.28   
+   (This version of django is used in this website development)
+5. pip install pillow 
+   (This format is used to manipulate and save many different image formats)
+6. python manage.py makemigrations 
+  (This command is used to automatically make migrations to files that have been changed to make models and updating the database schema)
+7. python manage.py migrate  
+  (This command makes sure that the schema matches the current state of the current models,managing the database changes throughout the lifecycle.)
+8. python populate_events.py
+   (This command makes sure that the database is populated properly)  
+9. python manage.py runserver  
+   (For running the server )
 
 ## General Instructions
 1. Fork this repository
