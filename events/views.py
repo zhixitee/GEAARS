@@ -1,13 +1,13 @@
-
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-from .models import Event, UserEvent
-from .forms import EventForm, UserForm, UserProfileForm
-
+from events.models import Category, Page, Event, UserEvent
+from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from datetime import datetime
+from .forms import EventForm 
+import json
 
 def events(request):
     all_events = Event.objects.all()
@@ -23,10 +23,33 @@ def about(request):
     visitor_cookie_handler(request)
     return render(request, 'events/about.html')
 
+def map(Request):
+    venues = [
+        {"name": "King Tut's Wah Wah Hut", "lat": 55.8625967562286, "lng": -4.264986115540963, "info": "Mighty concert room for up-and-coming local bands and cult international acts serving own lager. Address: 272A St Vincent St, Glasgow G2 5RL Phone: 0141 846 4034."},
+        {"name": "OVO Hydro", "lat": 55.85972303446611, "lng": -4.285458255827642, "info": "Multi-purpose indoor arena located within the Scottish Event Campus. Address: Exhibition Way, Stobcross Rd, Glasgow G3 8YW Capacity: 12,306 (all seated); 14,500 (with standing) Phone: 0141 248 3000"},
+        {"name": "Barrowland Ballroom", "lat": 55.85536512400785, "lng": -4.236643115351418, "info": "Entertainment venue, dance hall and music venue located in the Calton district. Address: 244 Gallowgate, Glasgow G4 0TT Capacity: 1,900 Phone: 0141 552 4601"},
+        {"name": "Bellahouston Park", "lat": 55.84642667620242, "lng": -4.313516156358837, "info": "A public park in the Bellahouston district on the South Side of Glasgow. Address: 16 Dumbreck Rd, Bellahouston, Glasgow G41 5BW Phone: 0141 287 9700"}
+    ]
+    venues_json = json.dumps(venues)
+    return render(request, 'map.html', {'venues_json': venues_json})
 
-def map(request):
-    return render(request, 'events/map.html')
+def choosenEvent(Request):
+    return render(Request, 'events/choosenEvent.html')
 
+def show_category(request, category_name_slug):
+    context_dict = {}
+
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+        pages = Page.objects.filter(category=category)
+
+        context_dict['pages'] = pages
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        context_dict['pages'] = None
+        context_dict['category'] = None
+    
+    return render(request, 'events/category.html', context=context_dict)
 
 @login_required
 def add_event(request):
