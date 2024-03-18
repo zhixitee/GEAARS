@@ -2,56 +2,23 @@
 {% load static %} 
 
 {% block title_block %}
-    Event Map
+    Venue Maps
 {% endblock %} 
 
 {% block body_block %}
-    <h1>The GEAARS Event Map</h1>
     <div>
-        Here you can explore all that Glasgow has to offer 
-        <br />
+        {% if user.is_authenticated %}
+        Welcome {{ user.username }}, here are the GEEARS verified venues!
+    {% else %}
+        Welcome here are the GEEARS verified venues!
+    {% endif %}
     </div>
 
-    <h1>Upcoming Events</h1>
-    <div> 
-        {% for event in events %}
-            <p>{{ event.title }}</p>
-            <p>{{ event.date }}</p>
-            <p>{{ event.location }}</p>
-        {% endfor %}
-    </div>
+    <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2239.000670499782!2d-4.267549523111516!3d55.86265477312504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48884427f253a50f%3A0x97f21d71ba894bbb!2sKing%20Tut&#39;s%20Wah%20Wah%20Hut!5e0!3m2!1sen!2suk!4v1711037497801!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
 
+    <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2239.4263581038294!2d-4.239250222487271!3d55.85526877312228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488846a59acc9ecd%3A0xbbf89788b5dd88ef!2sBarrowland%20Ballroom!5e0!3m2!1sen!2suk!4v1711037518861!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
 
-    <div>
-        <br>
-    </div>
+    <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2239.1755435055297!2d-4.288161922487052!3d55.85962067312398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4888467f6ad396bb%3A0x6bdf1ba31717c9d6!2sOVO%20Hydro!5e0!3m2!1sen!2suk!4v1711037592209!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
 
-    <div id="map" style="height: 600px; width: 600px;margin-left: auto"></div>
-    
-    <script>
-    var map = L.map('map').setView([55.8609, -4.2514], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-    
-    var barrowlandsLocation = L.marker([55.8553, -4.2367]).addTo(map);
-        barrowlandsLocation.bindPopup("<b>Barrowland Ballrom:</b> Extremely iconic venue in Glasgow<br>").openPopup();
-    
-    var hydroLocation = L.marker([55.8601, -4.2876]).addTo(map);
-        hydroLocation.bindPopup("<b>SEC Hydro:</b> One of the biggest music venues in Glasgow<br>").openPopup();
-
-    var kingsTutsLocation = L.marker([55.8645, -4.2648]).addTo(map);
-        kingsTutsLocation.bindPopup("<b> King Tut's Wah Wah Hut:</b><br>Iconic music venue in Glasgow.").openPopup();
-
-    var bellahoustonParkLocation = L.marker([55.8474, -4.3151]).addTo(map);
-        bellahoustonParkLocation.bindPopup("<b>Bellahouston Park:</b><br> A beautiful public park in Glasgow.").openPopup();
-
-    </script>
-
-
-    <div>
-        <br>
-    </div>
-
-{% endblock %}
+    <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2239.940430294721!2d-4.316772358058184!3d55.846348373230896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488846119d72677b%3A0x9fed801e3c1d6130!2sBellahouston%20Park!5e0!3m2!1sen!2suk!4v1711037760730!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
+{% endblock %} 
