@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.utils import timezone
+from events.forms import EventForm, UserForm, UserProfileForm
 from events.models import Category, Page, Event, UserEvent
 from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from datetime import datetime
-from .forms import EventForm 
 import json
 
 def events(request):
@@ -23,7 +24,7 @@ def about(request):
     visitor_cookie_handler(request)
     return render(request, 'events/about.html')
 
-def map(Request):
+def map(request):
     venues = [
         {"name": "King Tut's Wah Wah Hut", "lat": 55.8625967562286, "lng": -4.264986115540963, "info": "Mighty concert room for up-and-coming local bands and cult international acts serving own lager. Address: 272A St Vincent St, Glasgow G2 5RL Phone: 0141 846 4034."},
         {"name": "OVO Hydro", "lat": 55.85972303446611, "lng": -4.285458255827642, "info": "Multi-purpose indoor arena located within the Scottish Event Campus. Address: Exhibition Way, Stobcross Rd, Glasgow G3 8YW Capacity: 12,306 (all seated); 14,500 (with standing) Phone: 0141 248 3000"},
