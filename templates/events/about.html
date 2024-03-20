@@ -1,17 +1,53 @@
 {% extends 'events/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
-    About Events
+    About GEAARS
 {% endblock %}
 
 {% block body_block %}
-<h1>Events says...</h1>
-<div>
-    here is the about page. <br />
-    This tutorial has been put together by Tee Zhi Xi.<br />
-    <p>Visits: {{ visits }}</p>
+<style>
+    .about-section {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .about-image {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #444;
+    }
+
+    p {
+        text-indent: 20px;
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="about-section">
+    <h1>About GEAARS</h1>
+    <div class="about-image">
+        <img src="{% static 'images/about-us.jpg' %}" alt="About GEAARS">
+    </div>
+    <p>Welcome to our events platform, GEAARS - Glasgow Events and Arts Review System. This website has been developed to help organize and share upcoming events effectively within the Glasgow community.</p>
+    <p>GEAARS was designed with the goal of providing an easy-to-use space for event organizers and attendees alike. Whether you're looking to create, manage, or attend events, our site is here to support your needs.</p>
+    <p>This initiative is brought to you by our dedicated team of developers and event planners. We are committed to providing a seamless experience for all our users.</p>
+    <p>Thank you for choosing GEAARS for your event management needs. We are constantly working to improve our platform and welcome any feedback you may have.</p>
+    <p>For any inquiries or suggestions, please contact us through our support channel.</p>
 </div>
-<img src="{% static 'images/events.jpg' %}" alt="Picture of events" />
-<img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
 {% endblock %}
