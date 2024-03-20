@@ -30,7 +30,7 @@ conda activate events
 4. 
 
 ```
-   pip install django==2.2.28
+   pip install django==3.2
 ```
 
    (This version of django is used in this website development)
@@ -42,6 +42,14 @@ pip install pillow
 ```
 
 (This format is used to manipulate and save many different image formats)
+
+5. 
+
+```
+pip install social-auth-app-django
+```
+
+(This format is used to pull user data via Google API)
 
 
 6. 
