@@ -5,8 +5,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from events.forms import EventForm, UserForm, UserProfileForm
-from events.models import Category, Page, Event, UserEvent
-from events.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from events.models import Category, Event, UserEvent
+from events.forms import CategoryForm, UserForm, UserProfileForm
 from datetime import datetime
 import json
 
