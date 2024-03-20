@@ -85,4 +85,3 @@ python manage.py runserver
 4. Run the server check the changes.
 5. Commit and push.
 6. Wait for pull request to be merged.
-```
