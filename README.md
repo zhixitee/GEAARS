@@ -33,7 +33,6 @@ conda activate events
    pip install django==2.2.28
 ```
 
-````
    (This version of django is used in this website development)
 
 5. 
