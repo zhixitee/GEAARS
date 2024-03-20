@@ -43,7 +43,7 @@ pip install pillow
 
 (This format is used to manipulate and save many different image formats)
 
-5. 
+6. 
 
 ```
 pip install social-auth-app-django
@@ -52,7 +52,7 @@ pip install social-auth-app-django
 (This format is used to pull user data via Google API)
 
 
-6. 
+7. 
 
 ```
 python manage.py makemigrations
@@ -60,7 +60,7 @@ python manage.py makemigrations
 
 (This command is used to automatically make migrations to files that have been changed to make models and updating the database schema) 
 
-7. 
+8. 
 
 ```
 python manage.py migrate
@@ -68,7 +68,7 @@ python manage.py migrate
 
 (This command makes sure that the schema matches the current state of the current models,managing the database changes throughout the lifecycle.)
 
-8. 
+9. 
 
 ```
 python populate_events.py
@@ -76,7 +76,7 @@ python populate_events.py
 
 (This command makes sure that the database is populated properly)
 
-9. 
+10. 
 
 ```
 python manage.py runserver
