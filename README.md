@@ -52,7 +52,7 @@ python manage.py makemigrations
 
 (This command is used to automatically make migrations to files that have been changed to make models and updating the database schema) 
 
-7.
+7. 
 
 ```
 python manage.py migrate
@@ -74,7 +74,7 @@ python populate_events.py
 python manage.py runserver
 ```
 
-(For running the server )
+(For running the server )  
 
 ## General Instructions
 1. Fork this repository
