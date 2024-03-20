@@ -1,5 +1,5 @@
 {% extends 'events/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
     Login
@@ -15,4 +15,7 @@
     <br />
     <input type="submit" value="submit" />
 </form>
+<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with Facebook</a>
+<br>
+<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
 {% endblock %}

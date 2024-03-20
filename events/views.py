@@ -32,7 +32,7 @@ def map(request):
         {"name": "Bellahouston Park", "lat": 55.84642667620242, "lng": -4.313516156358837, "info": "A public park in the Bellahouston district on the South Side of Glasgow. Address: 16 Dumbreck Rd, Bellahouston, Glasgow G41 5BW Phone: 0141 287 9700"}
     ]
     venues_json = json.dumps(venues)
-    return render(request, 'map.html', {'venues_json': venues_json})
+    return render(request, 'events/map.html', {'venues_json': venues_json})
 
 
 def choosenEvent(request, event_slug):

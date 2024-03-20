@@ -1,8 +1,8 @@
 {% extends 'events/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
-    Register
+    Sign Up
 {% endblock %}
 
 {% block body_block %}
@@ -19,5 +19,8 @@ Events says: <strong>register here!</strong><br />
 
     <input type="submit" name="submit" value="Register" />
 </form>
+    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with facebook</a>
+    <br>
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
 {% endif %}
 {% endblock %}
