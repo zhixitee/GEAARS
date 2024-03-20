@@ -1,4 +1,0 @@
-Django==3.2
-pillow==10.2.0
-social-auth-app-django==5.4.0
-social-auth-core==4.5.3
