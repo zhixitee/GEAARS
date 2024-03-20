@@ -25,6 +25,7 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     organizer = models.ForeignKey(User, related_name='organized_events', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(null=False, unique=True)
+    image = models.ImageField(upload_to='event_images/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
