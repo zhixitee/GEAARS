@@ -127,16 +127,12 @@ def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     last_visit_cookie = get_server_side_cookie(
         request, 'last_visit', str(timezone.now()))
-
-    # Ensure last_visit_time is timezone-aware
     last_visit_time = timezone.datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc)
 
     if (timezone.now() - last_visit_time).days > 0:
         visits += 1
-        # Save the new visit information
         request.session['last_visit'] = str(timezone.now())
     else:
-        # Otherwise, use the last visit cookie
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
