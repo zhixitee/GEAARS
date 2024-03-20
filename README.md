@@ -17,7 +17,7 @@ Welcome to WAD group project setup by team 8D . This is a Event review website h
 conda create --name events
 ```
 
-(This command creates the working environment here our environment is events)
+(This command creates the virtual environment name events)
 
 3. 
 
