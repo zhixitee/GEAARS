@@ -56,8 +56,8 @@ python manage.py makemigrations
 
 ```
 python manage.py migrate
-
 ```
+
 (This command makes sure that the schema matches the current state of the current models,managing the database changes throughout the lifecycle.)
 
 8. 
@@ -72,7 +72,6 @@ python populate_events.py
 
 ```
 python manage.py runserver
-
 ```
 
 (For running the server )
