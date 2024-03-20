@@ -47,6 +47,13 @@ class UserEvent(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.event.title} ({self.status})"
 
+
+    class Meta:
+        unique_together = ('user', 'event')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.event.title} ({self.status})"
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to='profile_images', blank=True)

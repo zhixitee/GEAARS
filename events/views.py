@@ -34,8 +34,10 @@ def map(request):
     venues_json = json.dumps(venues)
     return render(request, 'map.html', {'venues_json': venues_json})
 
-def choosenEvent(Request):
-    return render(Request, 'events/choosenEvent.html')
+
+def choosenEvent(request, event_slug):
+    event = get_object_or_404(Event, slug=event_slug)
+    return render(request, 'events/choosenEvent.html', {'event': event})
 
 def show_category(request, category_name_slug):
     context_dict = {}
