@@ -19,6 +19,8 @@ from django.urls import include
 from events import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
 path('', views.events, name='events'),
@@ -26,6 +28,7 @@ path('events/', include('events.urls')),
 path('admin/', admin.site.urls),
 path('map/', views.map, name='map'),
 path('social-auth/', include('social_django.urls', namespace='social')),
+path('login/', auth_views.LoginView.as_view(), name='login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

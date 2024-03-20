@@ -15,4 +15,121 @@
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p>{{ event.description }}</p>
 </div>
-{% endblock %}
+<style>
+    .star {
+        cursor: pointer;
+        color: rgb(1, 1, 1);
+    }
+    .rated {
+        color: gold;
+    }
+    
+    .comment-container {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .comment-form-section {
+        flex: 1;
+        margin-right: 20px; 
+    }
+    
+    .comment-messages-section {
+        flex: 0 1 400px; /* Adjust the flex-basis to the desired width, here it's set to 200px */
+        max-height: 200px; /* Adjust the height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+        border: 1px solid #ccc; /* Add a border to the container */
+        box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Optional: adds a subtle shadow for depth */
+        padding: 10px;
+        background-color: #f9f9f9; /* Optional: background color */
+        margin-top: -306px;
+        margin-right:100px;
+    }
+    
+    </style>
+    
+    <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
+        {% csrf_token %}
+        
+        <!-- Review form fields -->
+        <div class="rating-system">
+            {% for field in review_form.visible_fields %}
+            <div class="form-group">
+                <h3>{{ field.label }}</h3>
+                <div class="stars" data-rating-name="{{ field.name }}">
+                    <span class="star" data-rating="1">&#9733;</span>
+                    <span class="star" data-rating="2">&#9733;</span>
+                    <span class="star" data-rating="3">&#9733;</span>
+                    <span class="star" data-rating="4">&#9733;</span>
+                    <span class="star" data-rating="5">&#9733;</span>
+                </div>
+                {{ field.as_hidden }}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Comment form fields -->
+        {% for field in comment_form %}
+        <div>
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+        {% endfor %}
+        
+        <button type="submit" name="make_a_review_discuss_event">Submit Review and Comment</button>
+    </form>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let allStars = document.querySelectorAll('.star');
+        allStars.forEach(function(star) {
+            star.addEventListener('click', function(ev) {
+                let span = ev.currentTarget;
+                let allStarsInGroup = span.parentNode.querySelectorAll('.star');
+                let match = false;
+                let num = 0;
+                allStarsInGroup.forEach(function(star, index) {
+                    if (match) {
+                        star.classList.remove('rated');
+                    } else {
+                        star.classList.add('rated');
+                    }
+                    if (star === span) {
+                        match = true;
+                        num = index + 1;
+                    }
+                });
+                let rating = parseInt(num);
+                let ratingInput = span.parentNode.nextElementSibling; 
+                ratingInput.value = rating; 
+            });
+        });
+    });
+    </script>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+    <div class="comment-container">
+        <div class="comment-form-section">
+            <!-- The form has been moved outside this div to encompass both the review and comment sections -->
+        </div>
+        <div class="comment-messages-section">
+            {% for comment in comments %}
+                <div class="comment">
+                    <strong>{{ comment.user.username }}</strong> says:
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% endblock %}
+    

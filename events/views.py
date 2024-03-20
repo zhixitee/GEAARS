@@ -5,19 +5,66 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from events.forms import EventForm, UserForm, UserProfileForm
-from events.models import Category, Event, UserEvent
-from events.forms import CategoryForm, UserForm, UserProfileForm
+from events.models import Category, Event, UserEvent, EventReview, CommentReview
+from events.forms import CategoryForm, UserForm, UserProfileForm,EventReviewForm, CommentForm
 from datetime import datetime
 import json
+from django.contrib import messages
 
 def events(request):
     all_events = Event.objects.all()
     return render(request, 'events/events.html', {'events': all_events})
 
+@login_required
+def make_a_review_discuss_event(request, event_slug):
+    event = get_object_or_404(Event, slug=event_slug)
+    if request.method == 'POST':
+        review_form = EventReviewForm(request.POST, prefix="review")
+        comment_form = CommentForm(request.POST, prefix="comment")
+        
+        if review_form.is_valid() and comment_form.is_valid():
+            # Save review
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.event = event
+            review.save()
+            
+            # Save comment
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.event = event
+            comment.save()
+            
+            messages.success(request, 'Submitted successfully!')
+            return redirect('events:choosen_event', event_slug=event.slug)
+        else:
+            messages.error(request, 'Error submitting your review and comment. Please check for errors.')
+    else:
+        review_form = EventReviewForm(prefix="review")
+        comment_form = CommentForm(prefix="comment")
+    
+    context = {
+        'event': event,
+        'review_form': review_form,
+        'comment_form': comment_form,
+    }
+    return render(request, 'events/choosenEvent.html', context)
+    
 
 def choosenEvent(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
-    return render(request, 'events/choosenEvent.html', {'event': event})
+    review_form = EventReviewForm(prefix="review")
+    comment_form = CommentForm(prefix="comment")
+    comments = CommentReview.objects.filter(event=event)  # Assuming you want to display existing comments
+
+    context = {
+        'event': event,
+        'review_form': review_form,
+        'comment_form': comment_form,
+        'comments': comments,  # Add this if you're showing comments on the event page
+    }
+    return render(request, 'events/choosenEvent.html', context)
+
 
 
 def about(request):
@@ -34,10 +81,6 @@ def map(request):
     venues_json = json.dumps(venues)
     return render(request, 'events/map.html', {'venues_json': venues_json})
 
-
-def choosenEvent(request, event_slug):
-    event = get_object_or_404(Event, slug=event_slug)
-    return render(request, 'events/choosenEvent.html', {'event': event})
 
 def show_category(request, category_name_slug):
     context_dict = {}

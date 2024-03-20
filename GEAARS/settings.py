@@ -98,9 +98,9 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
-LOGIN_URL = 'login'
+LOGIN_URL = 'events:login'
 LOGIN_REDIRECT_URL = '/events'
-LOGOUT_URL = 'logout'
+LOGOUT_URL = 'events:logout'
 LOGOUT_REDIRECT_URL = 'login'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '1109668153686417'
