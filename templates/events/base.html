@@ -112,7 +112,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:about' %}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:map' %}">Map</a></li>
             </ul>
-
+            
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -124,7 +124,7 @@
                         {% if user.userprofile.picture %}
                             <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; margin-left: 10px;">
                         {% else %}
-                            <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; margin-left: 10px;">
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; margin-left: 10px;">
                         {% endif %}
                     </li>
                 {% else %}

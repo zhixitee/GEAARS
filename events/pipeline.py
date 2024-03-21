@@ -4,7 +4,6 @@ from .models import UserProfile
 
 def save_email(strategy, details, user=None, *args, **kwargs):
     """A pipeline step to save the user's email."""
-    print("Email from details:", details.get('email'))  # Debug print
     if user and details.get('email'):
         user.email = details['email']
         user.save()
@@ -16,7 +15,6 @@ def get_pfp(backend,user, strategy, details, response, is_new=False, *args, **kw
         url = f"http://graph.facebook.com/{response['id']}/picture?type=large"
     elif backend.name == 'google-oauth2' and "picture" in response:
         url = response['picture']
-    else:
         return
     
     try:
@@ -30,4 +28,3 @@ def get_pfp(backend,user, strategy, details, response, is_new=False, *args, **kw
         profile.save()
     except Exception as e:
         pass # Handle exception as needed
-

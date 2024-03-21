@@ -67,9 +67,8 @@ class UserProfile(models.Model):
         return self.user.username
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    UserProfile.objects.get_or_create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

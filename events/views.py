@@ -5,12 +5,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from events.forms import EventForm, UserForm, UserProfileForm
-from events.models import Category, Event, UserEvent, EventReview, CommentReview
+from events.models import Category, Event, UserEvent, EventReview, CommentReview, UserProfile
 from events.forms import CategoryForm, UserForm, UserProfileForm, EventReviewForm, CommentForm
 from datetime import datetime
 import json
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.db import transaction
 
 
 def events(request):
@@ -122,17 +124,25 @@ def register(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST, request.FILES)
+
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+            user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data['password'])
             user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
-            return redirect('events:events')
+
+            profile, _ = UserProfile.objects.get_or_create(user=user)
+            profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+            if profile_form.is_valid():
+                profile_form.save()
+
+            user = authenticate(username=user.username, password=user_form.cleaned_data['password'])
+            if user:
+                login(request, user)
+                return redirect('events:events')
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
+
     return render(request, 'events/register.html', {
         'user_form': user_form,
         'profile_form': profile_form
