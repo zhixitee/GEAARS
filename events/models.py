@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 import uuid
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -95,4 +96,13 @@ class EventReview(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class UserFeedback(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_feedback')
+    review = models.TextField(max_length=2000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback by {self.user.username} on {self.created_at.strftime('%Y-%m-%d')}"
+    
 

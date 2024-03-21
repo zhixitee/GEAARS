@@ -8,8 +8,8 @@ from events.forms import EventForm, UserForm, UserProfileForm
 from events.models import Category, Event, UserEvent, EventReview, CommentReview, UserProfile
 from events.forms import CategoryForm, UserForm, UserProfileForm, EventReviewForm, CommentForm
 from datetime import datetime
-import json
 from django.contrib import messages
+from .forms import UserFeedbackForm
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -189,3 +189,16 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
     request.session['visits'] = visits
+
+@login_required
+def submit_user_feedback(request):
+    if request.method == 'POST':
+        form = UserFeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.user = request.user
+            feedback.save()
+            return redirect('feedback_thank_you')  
+    else:
+        form = UserFeedbackForm()
+    return render(request, 'feedback.html', {'form': form})
