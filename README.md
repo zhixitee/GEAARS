@@ -82,7 +82,15 @@ python populate_events.py
 python manage.py runserver
 ```
 
-(For running the server )  
+(For running the server )
+
+11. 
+
+```
+localhost:8000
+```
+
+(Change everything before ":" to "localhost" to ensure Google API runs properly when signing up and/or login in)  
 
 ## General Instructions
 1. Fork this repository
