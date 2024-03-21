@@ -92,18 +92,8 @@ def about(request):
 
 
 def map(request):
-    venues = [
-        {"name": "King Tut's Wah Wah Hut", "lat": 55.8625967562286, "lng": -4.264986115540963,
-            "info": "Mighty concert room for up-and-coming local bands and cult international acts serving own lager. Address: 272A St Vincent St, Glasgow G2 5RL Phone: 0141 846 4034."},
-        {"name": "OVO Hydro", "lat": 55.85972303446611, "lng": -4.285458255827642,
-            "info": "Multi-purpose indoor arena located within the Scottish Event Campus. Address: Exhibition Way, Stobcross Rd, Glasgow G3 8YW Capacity: 12,306 (all seated); 14,500 (with standing) Phone: 0141 248 3000"},
-        {"name": "Barrowland Ballroom", "lat": 55.85536512400785, "lng": -4.236643115351418,
-            "info": "Entertainment venue, dance hall and music venue located in the Calton district. Address: 244 Gallowgate, Glasgow G4 0TT Capacity: 1,900 Phone: 0141 552 4601"},
-        {"name": "Bellahouston Park", "lat": 55.84642667620242, "lng": -4.313516156358837,
-            "info": "A public park in the Bellahouston district on the South Side of Glasgow. Address: 16 Dumbreck Rd, Bellahouston, Glasgow G41 5BW Phone: 0141 287 9700"}
-    ]
-    venues_json = json.dumps(venues)
-    return render(request, 'events/map.html', {'venues_json': venues_json})
+    context = {}
+    return render(request, 'events/map.html', context)
 
 
 @login_required
