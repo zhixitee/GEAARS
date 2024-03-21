@@ -15,6 +15,7 @@ def get_pfp(backend,user, strategy, details, response, is_new=False, *args, **kw
         url = f"http://graph.facebook.com/{response['id']}/picture?type=large"
     elif backend.name == 'google-oauth2' and "picture" in response:
         url = response['picture']
+    else:
         return
     
     try:
