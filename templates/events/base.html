@@ -108,16 +108,34 @@
             <span class="toggler-icon bottom-bar"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:events' %}">Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:about' %}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:map' %}">Map</a></li>
+            </ul>
+
+            <!-- Profile/Logout for larger screens -->
+            <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'events:logout' %}">Logout</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'events:add_event' %}">Add Event</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'events:logout' %}">
+                            Logout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% if user.userprofile.picture %}
+                            <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; margin-left: 10px;">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture" class="rounded-circle" style="width: 40px; height: 40px; margin-left: 10px;">
+                        {% endif %}
+                    </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'events:register' %}">Register</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'events:login' %}">Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'events:register' %}">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'events:login' %}">Login</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
