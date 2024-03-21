@@ -37,6 +37,7 @@ def make_a_review_discuss_event(request, event_slug):
     if request.method == 'POST':
         review_form = EventReviewForm(request.POST, prefix="review")
         comment_form = CommentForm(request.POST, prefix="comment")
+        event_has_occurred = event.date < timezone.now()
 
         if review_form.is_valid() and comment_form.is_valid():
             review = review_form.save(commit=False)
@@ -59,10 +60,10 @@ def make_a_review_discuss_event(request, event_slug):
         comment_form = CommentForm(prefix="comment")
 
     context = {
-        'now': timezone.now(),
         'event': event,
         'review_form': review_form,
         'comment_form': comment_form,
+        'event_has_occurred': event_has_occurred,
     }
     return render(request, 'events/choosenEvent.html', context)
 

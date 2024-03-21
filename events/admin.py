@@ -20,6 +20,7 @@ class CommentReviewAdmin(admin.ModelAdmin):
 class EventReviewAdmin(admin.ModelAdmin):
     list_display = ('review_ID', 'user', 'event', 'atmosphere_rating', 'concession_price_rating', 'artist_rating', 'value_rating', 'location_rating' )
 
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(UserEvent, UserEventAdmin)

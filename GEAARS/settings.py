@@ -1,5 +1,7 @@
 import os
 
+from distutils import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -113,3 +115,4 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '879095623993-3nfq2g8nigf7dhrgrj4kvaqrle9gdcop.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
