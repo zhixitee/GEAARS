@@ -82,20 +82,20 @@ def map(request):
     return render(request, 'events/map.html', {'venues_json': venues_json})
 
 
-def show_category(request, category_name_slug):
-    context_dict = {}
+# def show_category(request, category_name_slug):
+#     context_dict = {}
 
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+#     try:
+#         category = Category.objects.get(slug=category_name_slug)
+#         pages = Page.objects.filter(category=category)
 
-        context_dict['pages'] = pages
-        context_dict['category'] = category
-    except Category.DoesNotExist:
-        context_dict['pages'] = None
-        context_dict['category'] = None
+#         context_dict['pages'] = pages
+#         context_dict['category'] = category
+#     except Category.DoesNotExist:
+#         context_dict['pages'] = None
+#         context_dict['category'] = None
     
-    return render(request, 'events/category.html', context=context_dict)
+#     return render(request, 'events/category.html', context=context_dict)
 
 @login_required
 def add_event(request):

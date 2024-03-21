@@ -35,13 +35,13 @@
     }
     
     .comment-messages-section {
-        flex: 0 1 400px; /* Adjust the flex-basis to the desired width, here it's set to 200px */
-        max-height: 200px; /* Adjust the height as needed */
-        overflow-y: auto; /* Enable vertical scrolling */
-        border: 1px solid #ccc; /* Add a border to the container */
-        box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Optional: adds a subtle shadow for depth */
+        flex: 0 1 400px; 
+        max-height: 200px; 
+        overflow-y: auto; 
+        border: 1px solid #ccc; 
+        box-shadow: 0 2px 4px rgba(0,0,0,.1); 
         padding: 10px;
-        background-color: #f9f9f9; /* Optional: background color */
+        background-color: #f9f9f9; 
         margin-top: -306px;
         margin-right:100px;
     }
@@ -51,7 +51,6 @@
     <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
         {% csrf_token %}
         
-        <!-- Review form fields -->
         <div class="rating-system">
             {% for field in review_form.visible_fields %}
             <div class="form-group">
@@ -67,8 +66,7 @@
             </div>
             {% endfor %}
         </div>
-        
-        <!-- Comment form fields -->
+
         {% for field in comment_form %}
         <div>
             {{ field.errors }}
@@ -110,7 +108,7 @@
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
@@ -118,7 +116,6 @@
     {% if user.is_authenticated %}
     <div class="comment-container">
         <div class="comment-form-section">
-            <!-- The form has been moved outside this div to encompass both the review and comment sections -->
         </div>
         <div class="comment-messages-section">
             {% for comment in comments %}
