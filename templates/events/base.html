@@ -70,6 +70,7 @@
 </head>
 <body>
 
+
 <nav class="navbar navbar-expand-lg navbar-custom">
     <a class="navbar-brand" href="{% url 'events:events' %}">
         <img src="{% static 'images/GEAARS.svg' %}" alt="GEAARS" class="logo-image">GEAARS
@@ -94,17 +95,19 @@
 </nav>
 
 <div class="container mt-4">
-    <div class="search-bar">
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search Events" aria-label="Search">
+    {% if show_search_bar %}
+    <div class="d-flex justify-content-center mb-4">
+        <form class="form-inline my-2 my-lg-0" action="{% url 'events:events' %}" method="get">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Events" aria-label="Search" name="q">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            <select class="form-control ml-2">
-                <option selected>Filter by...</option>
-                <option value="date">Date</option>
-                <option value="popularity">Popularity</option>
-            </select>
-        </form>
+        </form>        
+        <select class="form-control ml-2" style="width: 20%;">
+            <option selected>Filter by...</option>
+            <option value="date">Date</option>
+            <option value="popularity">Popularity</option>
+        </select>
     </div>
+    {% endif %}
     {% block body_block %}
     {% endblock %}
 </div>
