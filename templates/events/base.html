@@ -69,7 +69,6 @@
             transition: all 0.4s;
         }
 
-        /* Rotate and move the bars to create an 'X' when the navbar is opened */
         .navbar-toggler.collapsed .top-bar {
             transform: rotate(45deg) translate(5px, 5px);
         }
@@ -114,7 +113,6 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'events:map' %}">Map</a></li>
             </ul>
 
-            <!-- Profile/Logout for larger screens -->
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -131,7 +129,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'events:register' %}">Sign Up</a>
+                        <a class="nav-link" href="{% url 'events:register' %}">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'events:login' %}">Login</a>
