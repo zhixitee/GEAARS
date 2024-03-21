@@ -29,6 +29,11 @@ def events(request):
 @login_required
 def make_a_review_discuss_event(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
+    
+    if event.date > timezone.now():
+        messages.error(request, "You cannot review an event before it has occurred.")
+        return redirect('events:choosen_event', event_slug=event.slug)
+   
     if request.method == 'POST':
         review_form = EventReviewForm(request.POST, prefix="review")
         comment_form = CommentForm(request.POST, prefix="comment")
@@ -54,6 +59,7 @@ def make_a_review_discuss_event(request, event_slug):
         comment_form = CommentForm(prefix="comment")
 
     context = {
+        'now': timezone.now(),
         'event': event,
         'review_form': review_form,
         'comment_form': comment_form,

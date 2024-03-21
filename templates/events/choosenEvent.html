@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block body_block %}
+
+
+
 <div class="event-details">
     <h1>{{ event.title }}</h1>
     <div class="event-image">
@@ -47,7 +50,7 @@
     }
     
     </style>
-    
+    {% if event_has_occurred %}
     <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
         {% csrf_token %}
         
@@ -73,8 +76,13 @@
             {{ field.label_tag }} {{ field }}
         </div>
         {% endfor %}
+
+
         
         <button type="submit" name="make_a_review_discuss_event">Submit Review and Comment</button>
+        {% else %}
+        <p>This event has not yet occurred and cannot be reviewed.</p>
+        {% endif %}
     </form>
     
     <script>
