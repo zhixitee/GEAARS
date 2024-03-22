@@ -27,7 +27,7 @@ cd GEAARS
 2. **Create and Activate a Virtual Environment**
 
 ```bash
-conda create --name GEAARS python=3.8
+conda create --name GEAARS python=3.10
 conda activate GEAARS
 ```
 
