@@ -21,6 +21,17 @@
     <p>This initiative is brought to you by our dedicated team of developers and event planners. We are committed to providing a seamless experience for all our users.</p>
     <p>Thank you for choosing GEAARS for your event management needs. We are constantly working to improve our platform and welcome any feedback you may have.</p>
     <p>For any inquiries or suggestions, please contact us through our support channel.</p>
+
+    {% if user.is_authenticated %}
+        <h2>Submit Feedback</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ feedback_form.as_p }}
+            <button type="submit">Submit Feedback</button>
+        </form>
+    {% else %}
+        <p>Please <a href="{% url 'events:login' %}">login</a> to submit feedback.</p>
+    {% endif %}
 </div>
 {% endblock %}
 

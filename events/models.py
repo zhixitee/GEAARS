@@ -104,5 +104,19 @@ class UserFeedback(models.Model):
 
     def __str__(self):
         return f"Feedback by {self.user.username} on {self.created_at.strftime('%Y-%m-%d')}"
+
+class Feedback(models.Model):
+    CATEGORY_CHOICES = [
+        ('BUG', 'Bug report'),
+        ('SUGGEST', 'Suggest an event'),
+        ('CHANGE', 'Event details change'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks')
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_category_display()} by {self.user.username}"
     
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Category, UserProfile, Event, CommentReview, EventReview, UserFeedback
+from .models import Category, UserProfile, Event, CommentReview, EventReview, UserFeedback,Feedback
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH,
@@ -55,3 +55,8 @@ class UserFeedbackForm(forms.ModelForm):
     class Meta:
         model = UserFeedback
         fields = ['review']
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['category', 'message']

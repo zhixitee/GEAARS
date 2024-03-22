@@ -1,0 +1,23 @@
+{% extends 'events/base.html' %}
+{% load static %}
+
+{% block title_block %}
+My Profile
+{% endblock %}
+
+{% block body_block %}
+
+
+{% if user.userprofile.picture %}
+    <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px; margin-left: 10px;">
+{% else %}
+    <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Picture" style="width: 100px; height: 100px; margin-left: 10px;">
+{% endif %}
+
+<form method = "post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

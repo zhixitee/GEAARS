@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Event, UserEvent, UserProfile, CommentReview, EventReview
+from .models import Category, Event, UserEvent, UserProfile, CommentReview, EventReview,Feedback
 
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -27,3 +27,4 @@ admin.site.register(UserEvent, UserEventAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(CommentReview, CommentReviewAdmin)
 admin.site.register(EventReview, EventReviewAdmin)
+admin.site.register(Feedback)

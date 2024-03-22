@@ -29,6 +29,7 @@ path('admin/', admin.site.urls),
 path('map/', views.map, name='map'),
 path('social-auth/', include('social_django.urls', namespace='social')),
 path('login/', auth_views.LoginView.as_view(), name='login'),
+path('user_profile/', views.user_profile, name='profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
