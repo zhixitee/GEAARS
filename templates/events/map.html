@@ -1,44 +1,105 @@
-{% extends 'events/base.html' %} 
-{% load static %} 
+{% extends 'events/base.html' %}
+{% load static %}
 
 {% block title_block %}
     Event Map
-{% endblock %} 
-
+{% endblock %}
 
 {% block body_block %}
-<head>  
-    <link rel="stylesheet" href="{% static 'cssfiles/map.css' %}">
-</head>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    #map {
+        height: calc(100vh - 56px); /* Assuming navbar height is 56px */
+        width: 100%;
+        position: absolute;
+        top: 56px; /* Navbar height */
+        left: 0;
+        z-index: 1; /* Ensure map is behind the sidebar toggle */
+    }
+    .sidebar {
+        position: fixed;
+        top: 56px; /* Directly below the navbar */
+        left: 0;
+        width: 350px; /* Larger sidebar width */
+        max-width: 80%; /* Ensures sidebar doesn't get too wide on larger screens */
+        height: calc(100% - 56px);
+        background: #f8f9fa;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 2; /* Ensure sidebar is above the map */
+        padding: 1rem;
+    }
+    .sidebar-active {
+        transform: translateX(0);
+    }
+    #toggle-sidebar {
+        position: fixed;
+        top: 400px;
+        left: 0;
+        z-index: 3;
+        cursor: pointer;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+    .search-container {
+        padding-bottom: 1rem;
+    }
+    .event-item {
+        display: flex;
+        margin-bottom: 1rem;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .image-container img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+    .text-box {
+        padding: 0.5rem;
+    }
+</style>
 
-    <h1>The GEAARS Event Map</h1>
-    <div>
-        Here you can explore all that Glasgow has to offer 
-        <br />
+<div class="sidebar" id="sidebar">
+    <div class="search-container">
+        <input type="text" placeholder="Search events" aria-label="Search" style="width: 100%; padding: 0.5rem;">
     </div>
-
-    <h1>Upcoming Events</h1>
-    <div class="events-container"> 
+    <!-- Dynamically populated events list -->
+    <div class="events-list">
         {% for event in events %}
-            <div class="event-box">
-                <p><strong>Title:</strong> {{ event.title }}</p>
-                <p><strong>Date:</strong> {{ event.date }}</p>
-                <p><strong>Location:</strong> {{ event.location }}</p>
+        <div class="event-item" onclick="location.href='{% url 'events:choosen_event' event.slug %}';" style="cursor:pointer;">
+            <div class="image-container">
+                <img src="{% static 'images/'|add:event.slug|add:'.jpg' %}" alt="{{ event.title }}" />
             </div>
+            <div class="text-box">
+                <h3>{{ event.title }}</h3>
+                <p>{{ event.description|truncatewords:20 }}</p>
+            </div>
+        </div>
         {% endfor %}
     </div>
+</div>
 
+<button id="toggle-sidebar">☰</button>
+<div id="map"></div>
 
-    <div>
-        <br>
-    </div>
+<script src="{% static 'javascriptfiles/map.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('toggle-sidebar');
 
-    <div id="map"></div>
-    
-    <script src="{% static 'javascriptfiles/map.js' %}"></script>
-
-    <div>
-        <br>
-    </div>
-
+    toggle.addEventListener('click', function() {
+        sidebar.classList.toggle('sidebar-active');
+        this.textContent = sidebar.classList.contains('sidebar-active') ? '←' : '☰';
+    });
+});
+</script>
 {% endblock %}

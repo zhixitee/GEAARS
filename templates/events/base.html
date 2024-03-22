@@ -5,23 +5,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Events - {% block title_block %}Welcome to Glasgow Events And Arts Reviews!!{% endblock %}</title>
+    <title>{% block title_block %}Glasgow Events And Arts Reviews{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'cssfiles/base.css' %}">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="{% url 'events:events' %}">
             <img src="{% static 'images/GEAARS.svg' %}" alt="GEAARS" class="logo-image">GEAARS
@@ -64,33 +60,17 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
-        {% if request.resolver_match.url_name == 'events' %}
-        {% if show_search_bar %}
-        <div class="d-flex justify-content-center mb-4">
-            <form class="form-inline my-2 my-lg-0" action="{% url 'events:events' %}" method="get">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search Events" aria-label="Search" name="q">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>        
-            <form class="form-inline my-2 my-lg-0" action="{% url 'events:events' %}" method="get">
-                <select class="form-control ml-2" name="order_by" style="width: 150%;" onchange="this.form.submit();">
-                    <option value="">Filter by...</option>
-                    <option value="date_desc" {% if request.GET.order_by == "date_desc" %}selected="selected"{% endif %}>Later</option>
-                    <option value="date_asc" {% if request.GET.order_by == "date_asc" %}selected="selected"{% endif %}>Upcoming</option>
-                </select>
-            </form>
-        </div>
-        {% endif %}
-        {% endif %}
+    <div class="container flex-grow-1 mt-4">
         {% block body_block %}
         {% endblock %}
     </div>
 
-<footer class="footer mt-auto py-3 text-center">
-    <div class="container">
-        <span class="text-muted">{% block footer_block %}© 2024 Glasgow Events and Arts Reviews. All rights reserved.{% endblock %}</span>
-    </div>
-</footer>
-
+    {% if not request.resolver_match.url_name == 'map' %}
+    <footer class="footer mt-auto py-3 text-center">
+        <div class="container">
+            <span class="text-muted">© 2024 Glasgow Events and Arts Reviews. All rights reserved.</span>
+        </div>
+    </footer>
+    {% endif %}
 </body>
 </html>
