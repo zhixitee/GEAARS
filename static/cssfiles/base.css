@@ -59,6 +59,7 @@ body {
 .site-footer a {
     color: #007bff;
     text-decoration: none;
+    text-align: center;
 }
 
 .site-footer a:hover {

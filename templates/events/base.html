@@ -86,12 +86,14 @@
     </div>
 
     {% if not request.resolver_match.url_name == 'map' %}
-    <footer class="footer mt-auto py-3 text-center">
-        <div class="container">
-            <span class="text-muted">© 2024 Glasgow Events and Arts Reviews. All rights reserved.</span>
-            <p>Contact us at: <a href="mailto:contact@example.com">contact@example.com</a> or call us at <a href="tel:+1234567890">+123 456 7890</a></p>
-        </div>
-    </footer>
+        <footer class="footer mt-auto py-3 text-center">
+            <div class="container">
+                <span class="text-muted">© 2024 Glasgow Events and Arts Reviews. All rights reserved.</span>
+            </div>
+            <div>
+                Contact us at: <a href="mailto:contact@example.com">contact@example.com</a> or call us at <a href="tel:+1234567890">+123 456 7890</a>
+            </div>
+        </footer>
     {% endif %}
 </body>
 </html>
