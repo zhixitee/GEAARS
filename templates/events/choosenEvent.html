@@ -22,7 +22,6 @@
         <p>Event has not occurred yet!</p>
     {% endif %}
 </div>
-</div>
 
 {% if event_has_occurred %}
     {% if not user_has_submitted_review %}
@@ -122,7 +121,7 @@
                     <strong>{{ comment.user.username }}</strong> says:
                     <p>{{ comment.content }}</p>
                 </div>
-            {% endfor %} 
+            {% endfor %}
         </div>
     </div>
 {% endif %}
