@@ -1,0 +1,29 @@
+.star {
+    cursor: pointer;
+    color: rgb(1, 1, 1);
+}
+.rated {
+    color: gold;
+}
+
+.comment-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.comment-form-section {
+    flex: 1;
+    margin-right: 20px; 
+}
+
+.comment-messages-section {
+    flex: 0 1 400px; 
+    max-height: 200px; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); 
+    padding: 10px;
+    background-color: #f9f9f9; 
+    margin-top: -306px;
+    margin-right:100px;
+}

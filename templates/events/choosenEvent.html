@@ -8,6 +8,9 @@
 {% block body_block %}
 
 
+<head>  
+    <link rel="stylesheet" href="{% static 'cssfiles/choosenevent.css' %}">
+</head>
 
 <div class="event-details">
     <h1>{{ event.title }}</h1>
@@ -18,39 +21,8 @@
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p>{{ event.description }}</p>
 </div>
-<style>
-    .star {
-        cursor: pointer;
-        color: rgb(1, 1, 1);
-    }
-    .rated {
-        color: gold;
-    }
-    
-    .comment-container {
-        display: flex;
-        align-items: flex-start;
-    }
-    
-    .comment-form-section {
-        flex: 1;
-        margin-right: 20px; 
-    }
-    
-    .comment-messages-section {
-        flex: 0 1 400px; 
-        max-height: 200px; 
-        overflow-y: auto; 
-        border: 1px solid #ccc; 
-        box-shadow: 0 2px 4px rgba(0,0,0,.1); 
-        padding: 10px;
-        background-color: #f9f9f9; 
-        margin-top: -306px;
-        margin-right:100px;
-    }
-    
-    </style>
-    {% if event_has_occurred %}
+
+{% if event_has_occurred %}
     <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
         {% csrf_token %}
         
@@ -77,42 +49,14 @@
         </div>
         {% endfor %}
 
-
-        
         <button type="submit" name="make_a_review_discuss_event">Submit Review and Comment</button>
-        {% else %}
-        <p>This event has not yet occurred and cannot be reviewed.</p>
-        {% endif %}
+    {% else %}
+        <p>Event has not occurred yet, come back and review after the event has passed.</p>
+    {% endif %}
     </form>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let allStars = document.querySelectorAll('.star');
-        allStars.forEach(function(star) {
-            star.addEventListener('click', function(ev) {
-                let span = ev.currentTarget;
-                let allStarsInGroup = span.parentNode.querySelectorAll('.star');
-                let match = false;
-                let num = 0;
-                allStarsInGroup.forEach(function(star, index) {
-                    if (match) {
-                        star.classList.remove('rated');
-                    } else {
-                        star.classList.add('rated');
-                    }
-                    if (star === span) {
-                        match = true;
-                        num = index + 1;
-                    }
-                });
-                let rating = parseInt(num);
-                let ratingInput = span.parentNode.nextElementSibling; 
-                ratingInput.value = rating; 
-            });
-        });
-    });
-    </script>
-    
+
+    <script src="{% static 'javascriptfiles/choosenevent.js' %}"></script>
+
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -137,4 +81,4 @@
     {% endif %}
     
     {% endblock %}
-    
+

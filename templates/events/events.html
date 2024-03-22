@@ -6,55 +6,10 @@ Events
 {% endblock %}
 
 {% block body_block %}
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-    }
 
-    .image-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 20px;
-        justify-content: center;
-    }
-    
-    .card {
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease-in-out;
-        overflow: hidden;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .image-container img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
-
-    .text-box {
-        padding: 15px;
-        text-align: center;
-    }
-
-    h3, p {
-        margin: 10px 0;
-    }
-
-    @media (max-width: 768px) {
-        .image-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="{% static 'cssfiles/events.css' %}">
+</head>
 
 <h1>Events For You</h1>
 <div>

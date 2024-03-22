@@ -17,29 +17,35 @@ from django.db import transaction
 
 def events(request):
     query = request.GET.get('q')
+    order_by = request.GET.get('order_by', 'date_desc')  # Default to newest first
+    events_query = Event.objects.all()
+
     if query:
-        all_events = Event.objects.filter(
+        events_query = events_query.filter(
             Q(title__icontains=query) |
             Q(description__icontains=query) |
             Q(location__icontains=query)
         )
-    else:
-        all_events = Event.objects.all()
-    return render(request, 'events/events.html', {'events': all_events, 'show_search_bar': True})
+    
+    # Adjust ordering based on the selection
+    if order_by == 'date_desc':
+        events_query = events_query.order_by('-date')
+    elif order_by == 'date_asc':
+        events_query = events_query.order_by('date')
+
+    return render(request, 'events/events.html', {
+        'events': events_query,
+        'show_search_bar': True,
+    })
 
 
 @login_required
 def make_a_review_discuss_event(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
     
-    if event.date > timezone.now():
-        messages.error(request, "You cannot review an event before it has occurred.")
-        return redirect('events:choosen_event', event_slug=event.slug)
-   
     if request.method == 'POST':
         review_form = EventReviewForm(request.POST, prefix="review")
         comment_form = CommentForm(request.POST, prefix="comment")
-        event_has_occurred = event.date < timezone.now()
 
         if review_form.is_valid() and comment_form.is_valid():
             review = review_form.save(commit=False)
@@ -65,16 +71,16 @@ def make_a_review_discuss_event(request, event_slug):
         'event': event,
         'review_form': review_form,
         'comment_form': comment_form,
-        'event_has_occurred': event_has_occurred,
     }
     return render(request, 'events/choosenEvent.html', context)
+
 
 
 def choosenEvent(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
     review_form = EventReviewForm(prefix="review")
     comment_form = CommentForm(prefix="comment")
-
+    event_has_occurred = event.date < timezone.now()
     comments = CommentReview.objects.filter(event=event)
 
     context = {
@@ -82,6 +88,7 @@ def choosenEvent(request, event_slug):
         'review_form': review_form,
         'comment_form': comment_form,
         'comments': comments,
+        'event_has_occurred': event_has_occurred,
     }
     return render(request, 'events/choosenEvent.html', context)
 
@@ -92,8 +99,8 @@ def about(request):
 
 
 def map(request):
-    context = {}
-    return render(request, 'events/map.html', context)
+    events = Event.objects.filter(date__gt=timezone.now())
+    return render(request, 'events/map.html', {'events': events})
 
 
 @login_required
