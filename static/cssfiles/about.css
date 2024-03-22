@@ -1,5 +1,4 @@
 body {
-    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #333;
 }
@@ -27,7 +26,6 @@ body {
 h1 {
     text-align: center;
     color: #000000; 
-    font-family: 'Oswald', sans-serif;
     font-weight: 400; 
     margin-bottom: 10px; 
     margin-top: 0px;
