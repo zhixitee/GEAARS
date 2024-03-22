@@ -1,19 +1,26 @@
 .star {
     cursor: pointer;
     color: rgb(1, 1, 1);
+    font-size: 24px;
 }
 .rated {
     color: gold;
 }
 
+.rating-system{
+    text-align: center;
+}
+
 .comment-container {
     display: flex;
     align-items: flex-start;
+    align-self: right;
 }
 
 .comment-form-section {
     flex: 1;
-    margin-right: 20px; 
+    margin-right: 200px; 
+    align-self: left;
 }
 
 .comment-messages-section {
@@ -25,17 +32,74 @@
     padding: 10px;
     background-color: #f9f9f9; 
     margin-top: -306px;
-    margin-right:100px;
+    
 }
 
 .event-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center-align items horizontally */
+    justify-content: center; /* Center-align items vertically (if you want everything centered in the container) */
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px auto; /* Center the .event-details itself horizontally */
+    max-width: 600px; /* Adjust the max width as per your design needs */
 }
-.event-image img {
+
+.event-details h1 {
+    font-size: 2.5em;
+    color: #4e9fde;
+    margin: 10px 0;
+    text-align: center; /* Center-align the text */
+}
+
+.event-details .event-image img {
     max-width: 100%;
     height: auto;
-    padding: 1rem 0;
+    border-radius: 4px;
+}
+
+.event-details p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin: 10px 0;
+    text-align: center; /* Center-align the text */
+}
+
+.event-details p strong {
+    color: #000;
+}
+
+.event-image img {
+    max-width: 25%; /* Adjust based on your needs */
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+.rating-system.disabled .star {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.h3{
+    text-align: center;
+    margin-right: 20px;
+}
+
+button[name="make_a_review_discuss_event"] {
+    width: auto; /* Adjust to your preference */
+    max-width: 200px; /* Example to limit the button's maximum width */
+    align-self: center;
+}
+
+.text-box {
+    padding: 15px;
+    text-align: center;
+    margin: auto; /* Add this to center within flex container */
 }

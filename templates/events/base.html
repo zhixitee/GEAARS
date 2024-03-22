@@ -60,6 +60,26 @@
         </div>
     </nav>
 
+    <div class="container mt-4">
+        {% if request.resolver_match.url_name == 'events' %}
+        {% if show_search_bar %}
+        <div class="d-flex justify-content-center mb-4">
+            <form class="form-inline my-2 my-lg-0" action="{% url 'events:events' %}" method="get">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Events" aria-label="Search" name="q">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>        
+            <form class="form-inline my-2 my-lg-0" action="{% url 'events:events' %}" method="get">
+                <select class="form-control ml-2" name="order_by" style="width: 150%;" onchange="this.form.submit();">
+                    <option value="">Filter by...</option>
+                    <option value="date_desc" {% if request.GET.order_by == "date_desc" %}selected="selected"{% endif %}>Later</option>
+                    <option value="date_asc" {% if request.GET.order_by == "date_asc" %}selected="selected"{% endif %}>Upcoming</option>
+                </select>
+            </form>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+
     <div class="container flex-grow-1 mt-4">
         {% block body_block %}
         {% endblock %}
