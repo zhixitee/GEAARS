@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-
-
-<head>  
+<head>
     <link rel="stylesheet" href="{% static 'cssfiles/choosenevent.css' %}">
 </head>
 
@@ -20,52 +18,101 @@
     <p><strong>Date:</strong> {{ event.date|date:"D, d M Y H:i" }}</p>
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p>{{ event.description }}</p>
+    {% if not event_has_occurred %}
+        <p>Event has not occurred yet!</p>
+    {% endif %}
+</div>
 </div>
 
 {% if event_has_occurred %}
-    <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
-        {% csrf_token %}
-        
-        <div class="rating-system">
-            {% for field in review_form.visible_fields %}
-            <div class="form-group">
-                <h3>{{ field.label }}</h3>
-                <div class="stars" data-rating-name="{{ field.name }}">
-                    <span class="star" data-rating="1">&#9733;</span>
-                    <span class="star" data-rating="2">&#9733;</span>
-                    <span class="star" data-rating="3">&#9733;</span>
-                    <span class="star" data-rating="4">&#9733;</span>
-                    <span class="star" data-rating="5">&#9733;</span>
-                </div>
-                {{ field.as_hidden }}
+    {% if not user_has_submitted_review %}
+        <form method="post" action="{% url 'events:make_a_review_discuss_event' event_slug=event.slug %}">
+            {% csrf_token %}
+            <div class="rating-system">
+                {% for field in review_form.visible_fields %}
+                        <div class="form-group">
+                            <h3>{{ field.label }}</h3>
+                            <div class="stars" data-rating-name="{{ field.name }}">
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                            </div>
+                            {{ field.as_hidden }}
+                        </div>
+                {% endfor %}
             </div>
+            </div>
+
+            {% for field in comment_form %}
+            <div>
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+
+            <button type="submit" name="make_a_review_discuss_event">Submit Review and Comment</button>
+        </form>
+    {% else %}
+    </div>
+    <div class="rating-system" data-user-has-submitted-review="{{ user_has_submitted_review }}">
+
+        <h3>Atmosphere Rating</h3>
+        <div class="stars" data-rating-name="atmosphere_rating">
+            {% for i in "12345" %}
+                <span class="star {% if forloop.counter <= user_review.atmosphere_rating %}rated{% endif %}">&#9733;</span>
+            {% endfor %}
+        </div>
+    
+    
+        <h3>Artist Rating</h3>
+        <div class="stars" data-rating-name="artist_rating">
+            {% for i in "12345" %}
+                <span class="star {% if forloop.counter <= user_review.artist_rating %}rated{% endif %}">&#9733;</span>
             {% endfor %}
         </div>
 
-        {% for field in comment_form %}
-        <div>
-            {{ field.errors }}
-            {{ field.label_tag }} {{ field }}
+    
+        <h3>Concession Price Rating</h3>
+        <div class="stars" data-rating-name="concession_price_rating">
+            {% for i in "12345" %}
+                <span class="star {% if forloop.counter <= user_review.concession_price_rating %}rated{% endif %}">&#9733;</span>
+            {% endfor %}
         </div>
-        {% endfor %}
 
-        <button type="submit" name="make_a_review_discuss_event">Submit Review and Comment</button>
-    {% else %}
-        <p>Event has not occurred yet, come back and review after the event has passed.</p>
-    {% endif %}
-    </form>
+        <h3>Value Rating</h3>
+        <div class="stars" data-rating-name="concession_price_rating">
+            {% for i in "12345" %}
+                <span class="star {% if forloop.counter <= user_review.value_rating %}rated{% endif %}">&#9733;</span>
+            {% endfor %}
+        </div>
 
-    <script src="{% static 'javascriptfiles/choosenevent.js' %}"></script>
+        <h3>LocationRating</h3>
+        <div class="stars" data-rating-name="concession_price_rating">
+            {% for i in "12345" %}
+                <span class="star {% if forloop.counter <= user_review.location_rating %}rated{% endif %}">&#9733;</span>
+            {% endfor %}
+        </div>
+    </div>
+    
+    </br>
+        <h3 class ="h3">You've already submitted a review for this event!</h3>
+{% endif %}
+{% endif %}
 
-    {% if messages %}
+<script src="{% static 'javascriptfiles/choosenevent.js' %}"></script>
+
+{% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <li>{{ message }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
-    
-    {% if user.is_authenticated %}
+{% endif %}
+
+{% if comments.exists %}
+{% if user.is_authenticated %}
     <div class="comment-container">
         <div class="comment-form-section">
         </div>
@@ -75,10 +122,9 @@
                     <strong>{{ comment.user.username }}</strong> says:
                     <p>{{ comment.content }}</p>
                 </div>
-            {% endfor %}
+            {% endfor %} 
         </div>
     </div>
-    {% endif %}
-    
-    {% endblock %}
-
+{% endif %}
+{% endif %}
+{% endblock %}

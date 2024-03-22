@@ -84,12 +84,21 @@ def choosenEvent(request, event_slug):
     event_has_occurred = event.date < timezone.now()
     comments = CommentReview.objects.filter(event=event)
 
+    user_review = None
+    user_has_submitted_review = True
+
+    if request.user.is_authenticated:
+        user_review = EventReview.objects.filter(event=event, user=request.user).first()
+        user_has_submitted_review = bool(user_review)
+
     context = {
         'event': event,
         'review_form': review_form,
         'comment_form': comment_form,
         'comments': comments,
         'event_has_occurred': event_has_occurred,
+        'user_has_submitted_review': user_has_submitted_review,
+        'user_review': user_review,
     }
     return render(request, 'events/choosenEvent.html', context)
 

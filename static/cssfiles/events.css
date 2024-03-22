@@ -41,6 +41,15 @@
         margin: 10px 0;
     }
 
+    .coming-soon {
+        background-color: rgba(255, 235, 59, 0.7); /* Example: semi-transparent yellow background */
+        color: #333; /* Dark text */
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin: 10px 0; /* Spacing for visual separation */
+    }
+
     @media (max-width: 768px) {
         .image-grid {
             grid-template-columns: 1fr;
