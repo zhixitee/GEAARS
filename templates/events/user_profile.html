@@ -6,18 +6,24 @@ My Profile
 {% endblock %}
 
 {% block body_block %}
-
-
-{% if user.userprofile.picture %}
-    <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px; margin-left: 10px;">
-{% else %}
-    <img src="{% static 'images/default-profile.jpg' %}" alt="Profile Picture" style="width: 100px; height: 100px; margin-left: 10px;">
-{% endif %}
-
-<form method = "post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ profile_form.as_p }}
-
-    <button type="submit">Upload</button>
-</form>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="profile-img mb-3">
+                {% if user.userprofile.picture %}
+                    <img class="rounded-circle border" src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 100px; height: 100px;">
+                {% else %}
+                    <img class="rounded-circle border" src="{% static 'images/default-profile.jpg' %}" alt="Profile Picture" style="width: 100px; height: 100px;">
+                {% endif %}
+            </div>
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ profile_form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
