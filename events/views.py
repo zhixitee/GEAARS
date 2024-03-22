@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from events.forms import EventForm, UserForm, UserProfileForm
 from events.models import Category, Event, UserEvent, EventReview, CommentReview, UserProfile
-from events.forms import CategoryForm, UserForm, UserProfileForm, EventReviewForm, CommentForm,FeedbackForm
+from events.forms import UserForm, UserProfileForm, EventReviewForm, CommentForm, FeedbackForm
 from datetime import datetime
 from django.contrib import messages
 from .forms import UserFeedbackForm
@@ -18,7 +18,7 @@ from django.contrib import messages
 
 def events(request):
     query = request.GET.get('q')
-    order_by = request.GET.get('order_by', 'date_desc')  # Default to newest first
+    order_by = request.GET.get('order_by', 'date_desc')
     events_query = Event.objects.all()
 
     if query:
@@ -27,8 +27,7 @@ def events(request):
             Q(description__icontains=query) |
             Q(location__icontains=query)
         )
-    
-    # Adjust ordering based on the selection
+
     if order_by == 'date_desc':
         events_query = events_query.order_by('-date')
     elif order_by == 'date_asc':
@@ -43,7 +42,7 @@ def events(request):
 @login_required
 def make_a_review_discuss_event(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
-    
+
     if request.method == 'POST':
         review_form = EventReviewForm(request.POST, prefix="review")
         comment_form = CommentForm(request.POST, prefix="comment")
@@ -76,7 +75,6 @@ def make_a_review_discuss_event(request, event_slug):
     return render(request, 'events/choosenEvent.html', context)
 
 
-
 def choosenEvent(request, event_slug):
     event = get_object_or_404(Event, slug=event_slug)
     review_form = EventReviewForm(prefix="review")
@@ -88,7 +86,8 @@ def choosenEvent(request, event_slug):
     user_has_submitted_review = True
 
     if request.user.is_authenticated:
-        user_review = EventReview.objects.filter(event=event, user=request.user).first()
+        user_review = EventReview.objects.filter(
+            event=event, user=request.user).first()
         user_has_submitted_review = bool(user_review)
 
     context = {
@@ -108,8 +107,8 @@ def about(request):
         feedback_form = FeedbackForm(request.POST)
         if feedback_form.is_valid():
             feedback = feedback_form.save(commit=False)
-            feedback.user = request.user  # Associate the current user
-            feedback.save()  # Now save the feedback with the user
+            feedback.user = request.user
+            feedback.save() 
             messages.success(request, 'Thank you for your feedback!')
             return redirect('events:about')
     else:
@@ -118,6 +117,7 @@ def about(request):
         'feedback_form': feedback_form,
     }
     return render(request, 'events/about.html', context)
+
 
 def map(request):
     events = Event.objects.filter(date__gt=timezone.now())
@@ -149,11 +149,13 @@ def register(request):
             user.save()
 
             profile, _ = UserProfile.objects.get_or_create(user=user)
-            profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+            profile_form = UserProfileForm(
+                request.POST, request.FILES, instance=profile)
             if profile_form.is_valid():
                 profile_form.save()
 
-            user = authenticate(username=user.username, password=user_form.cleaned_data['password'])
+            user = authenticate(username=user.username,
+                                password=user_form.cleaned_data['password'])
             if user:
                 login(request, user)
                 return redirect('events:events')
@@ -189,18 +191,21 @@ def user_logout(request):
     logout(request)
     return redirect('events:events')
 
+
 @login_required
 def user_profile(request):
     profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
-        
+        profile_form = UserProfileForm(
+            request.POST, request.FILES, instance=profile)
+
         if profile_form.is_valid():
             profile_form.save()
             return redirect('profile')
     else:
         profile_form = UserProfileForm(instance=profile)
     return render(request, 'events/user_profile.html', {'profile_form': profile_form})
+
 
 @login_required
 def user_events_list(request):
@@ -230,6 +235,7 @@ def visitor_cookie_handler(request):
 
     request.session['visits'] = visits
 
+
 @login_required
 def submit_user_feedback(request):
     if request.method == 'POST':
@@ -238,10 +244,11 @@ def submit_user_feedback(request):
             feedback = form.save(commit=False)
             feedback.user = request.user
             feedback.save()
-            return redirect('feedback_thank_you')  
+            return redirect('feedback_thank_you')
     else:
         form = UserFeedbackForm()
     return render(request, 'feedback.html', {'form': form})
+
 
 @login_required
 def submit_feedback(request):
@@ -252,7 +259,7 @@ def submit_feedback(request):
             feedback.user = request.user
             feedback.save()
             messages.success(request, 'Feedback submitted successfully.')
-            return redirect('events:about')  
+            return redirect('events:about')
     else:
         form = FeedbackForm()
     return render(request, 'events/about.html', {'feedback_form': form})

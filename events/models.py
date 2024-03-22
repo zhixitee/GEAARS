@@ -8,6 +8,7 @@ import uuid
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Category(models.Model):
     NAME_MAX_LENGTH = 128
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
@@ -23,12 +24,14 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     date = models.DateTimeField(default=timezone.now)
     location = models.CharField(max_length=200)
-    organizer = models.ForeignKey(User, related_name='organized_events', on_delete=models.SET_NULL, null=True)
+    organizer = models.ForeignKey(
+        User, related_name='organized_events', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(null=False, unique=True)
     image = models.ImageField(upload_to='event_images/', blank=True, null=True)
 
@@ -36,15 +39,18 @@ class Event(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super(Event, self).save(*args, **kwargs)
-        
+
     def __str__(self):
         return f"{self.title} - {self.date.strftime('%Y-%m-%d')}"
 
+
 class UserEvent(models.Model):
-    STATUS_CHOICES = [('attending', 'Attending'), ('interested', 'Interested'), ('declined', 'Declined')]
+    STATUS_CHOICES = [('attending', 'Attending'),
+                      ('interested', 'Interested'), ('declined', 'Declined')]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default='interested')
+    status = models.CharField(
+        max_length=100, choices=STATUS_CHOICES, default='interested')
     timestamp = models.DateTimeField(default=timezone.now)
 
     class Meta:
@@ -53,12 +59,12 @@ class UserEvent(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.event.title} ({self.status})"
 
-
     class Meta:
         unique_together = ('user', 'event')
 
     def __str__(self):
         return f"{self.user.username} - {self.event.title} ({self.status})"
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -67,43 +73,59 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     UserProfile.objects.get_or_create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
 
+
 class CommentReview(models.Model):
-    comment_ID = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    comment_ID = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     content = models.TextField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name="comment_reviews", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name="comment_reviews", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
+
 
 class EventReview(models.Model):
-    review_ID = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
-    user = models.ForeignKey(User, related_name="event_review", on_delete=models.CASCADE)
+    review_ID = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=False)
+    user = models.ForeignKey(
+        User, related_name="event_review", on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    atmosphere_rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    concession_price_rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    artist_rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    value_rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    location_rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    atmosphere_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    concession_price_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    artist_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    value_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
+    location_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     def __str__(self):
         return self.user.username
-    
+
+
 class UserFeedback(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_feedback')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_feedback')
     review = models.TextField(max_length=2000)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Feedback by {self.user.username} on {self.created_at.strftime('%Y-%m-%d')}"
+
 
 class Feedback(models.Model):
     CATEGORY_CHOICES = [
@@ -111,12 +133,11 @@ class Feedback(models.Model):
         ('SUGGEST', 'Suggest an event'),
         ('CHANGE', 'Event details change'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='feedbacks')
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.get_category_display()} by {self.user.username}"
-    
-
