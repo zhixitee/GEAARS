@@ -6,16 +6,47 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to Events</h1>
-<form id="login_form" method="post" action="{% url 'events:login' %}">
-    {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50" />
-    <br />
-    Password: <input type="password" name="password" value="" size="50" />
-    <br />
-    <input type="submit" value="submit" />
-</form>
-<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with Facebook</a>
-<br>
-<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Login to Events</h1>
+            <form id="login_form" method="post" action="{% url 'events:login' %}" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" id="username" required>
+                    <div class="invalid-feedback">
+                        Please enter your username.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" class="form-control" id="password" required>
+                    <div class="invalid-feedback">
+                        Please enter your password.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="social-login mt-3">
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                    <img src="{% static 'images/facebook-official.svg' %}" alt="Facebook" style="width: 20px; margin-right: 10px;">
+                    Login with Facebook
+                </a>
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger w-100 d-flex align-items-center justify-content-center">
+                    <img src="{% static 'images/google-icon.svg' %}" alt="Google" style="width: 20px; margin-right: 10px;">
+                    Login with Google
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .social-login .btn {
+        display: block;
+    }
+</style>
 {% endblock %}

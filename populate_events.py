@@ -1,6 +1,7 @@
 import os
 import django
 from django.utils import timezone
+from django.utils.timezone import make_aware
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GEAARS.settings')
 django.setup()
@@ -18,30 +19,37 @@ def populate():
         {'title': 'Hella Mega Tour', 'date': '2022-06-29', 'description': 'The Hella Mega Tour is a worldwide concert tour by the band Green Day. The tour is also co-headlined by both Weezer and Fall Out Boy, all three of whom are playing their greatest hits and newest work', 'location': 'Bellahouston Park', 'organizer_username': 'admin'},
         {'title': 'Bongos Bingo', 'date': '2024-03-23', 'description': 'Its a crazy mix of traditional bingo, dance-offs, rave intervals, audience participation and countless magical moments.', 'location': 'SWG3', 'organizer_username': 'admin'},
         {'title': 'The Front Bottoms', 'date': '2023-12-11', 'description': 'The Front Bottoms are an American rock band from Woodcliff Lake, New Jersey.', 'location': 'O2 Academy', 'organizer_username': 'admin'},
+    
     ]
 
     for event_info in events_data:
-        add_event(**event_info)
+        # Parse the date string into a datetime object
+        naive_datetime = timezone.datetime.strptime(event_info['date'], '%Y-%m-%d')
+        
+        # Make the datetime object timezone-aware
+        aware_datetime = make_aware(naive_datetime)
 
-    for e in Event.objects.all():
-        print(f'Event - {e.title}: {e.description}')
+        event = add_event(title=event_info['title'], date=aware_datetime, description=event_info['description'], location=event_info['location'], organizer_username=event_info['organizer_username'])
+        
+        # Print details of the created/fetched event
+        print(f"Event '{event.title}' by organizer '{event.organizer.username}' at '{event.location}' on '{event.date}'")
 
 def add_event(title, date, description, location, organizer_username):
     organizer, created = User.objects.get_or_create(username=organizer_username)
     if created:
         organizer.set_password('defaultpassword')
         organizer.save()
-    
-    e, created = Event.objects.get_or_create(
+
+    event, created = Event.objects.get_or_create(
         title=title,
         defaults={
             'description': description,
-            'date': timezone.datetime.strptime(date, '%Y-%m-%d').date(),
+            'date': date,
             'location': location,
             'organizer': organizer
         }
     )
-    return e
+    return event
 
 if __name__ == '__main__':
     print('Starting events population script...')

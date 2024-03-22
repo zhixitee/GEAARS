@@ -6,21 +6,60 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Register for Events</h1>
-{% if registered %}
-Events says: <strong>thank you for registering!</strong>
-<a href="{% url 'events:events' %}">Return to the homepage.</a><br />
-{% else %}
-Events says: <strong>register here!</strong><br />
-<form id="user_form" method="post" action="{% url 'events:register' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Register for Events</h1>
+            {% if registered %}
+            <div class="alert alert-success" role="alert">
+                <strong>Thank you for registering!</strong>
+                <a href="{% url 'events:events' %}" class="alert-link">Return to the homepage.</a>
+            </div>
+            {% else %}
+            <form id="user_form" method="post" action="{% url 'events:register' %}" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ user_form.username.label_tag }}
+                    {{ user_form.username }}
+                    {{ user_form.username.errors }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.password.label_tag }}
+                    {{ user_form.password }}
+                    {{ user_form.password.errors }}
+                </div>
+                <div class="form-group">
+                    {{ profile_form.website.label_tag }}
+                    {{ profile_form.website }}
+                    {{ profile_form.website.errors }}
+                </div>
+                <div class="form-group">
+                    {{ profile_form.picture.label_tag }}
+                    {{ profile_form.picture }}
+                    {{ profile_form.picture.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            <div class="social-login mt-3">
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                    <img src="{% static 'images/facebook-official.svg' %}" alt="Facebook" style="width: 20px; margin-right: 10px;">
+                    Login with Facebook
+                </a>
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger w-100 d-flex align-items-center justify-content-center">
+                    <img src="{% static 'images/google-icon.svg' %}" alt="Google" style="width: 20px; margin-right: 10px;">
+                    Login with Google
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-    <input type="submit" name="submit" value="Register" />
-</form>
-    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Login with facebook</a>
-    <br>
-    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-primary">Login with Google</a>
-{% endif %}
+{% block extra_css %}
+<style>
+    .social-login .btn {
+        display: block;
+    }
+</style>
 {% endblock %}
