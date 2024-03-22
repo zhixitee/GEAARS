@@ -13,25 +13,25 @@
         height: 100%;
     }
     #map {
-        height: calc(100vh - 56px); /* Assuming navbar height is 56px */
+        height: calc(100vh - 56px); 
         width: 100%;
         position: absolute;
-        top: 56px; /* Navbar height */
+        top: 56px; 
         left: 0;
-        z-index: 1; /* Ensure map is behind the sidebar toggle */
+        z-index: 1; 
     }
     .sidebar {
         position: fixed;
-        top: 56px; /* Directly below the navbar */
+        top: 56px; 
         left: 0;
-        width: 350px; /* Larger sidebar width */
-        max-width: 80%; /* Ensures sidebar doesn't get too wide on larger screens */
+        width: 350px; 
+        max-width: 80%; 
         height: calc(100% - 56px);
         background: #f8f9fa;
         overflow-y: auto;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
-        z-index: 2; /* Ensure sidebar is above the map */
+        z-index: 2; 
         padding: 1rem;
     }
     .sidebar-active {
