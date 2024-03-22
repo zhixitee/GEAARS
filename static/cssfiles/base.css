@@ -50,33 +50,24 @@ body {
 
 .site-footer {
     background-color: #f4f4f4;
-    /* Light grey background */
     color: #333;
-    /* Dark text color */
     text-align: center;
-    /* Center the text */
     padding: 20px;
-    /* Add some padding */
     font-size: 16px;
-    /* Set the font size */
 }
 
 .site-footer a {
     color: #007bff;
-    /* Make links stand out */
     text-decoration: none;
-    /* No underline */
 }
 
 .site-footer a:hover {
     text-decoration: underline;
-    /* Underline on hover */
 }
 
 @media (max-width: 600px) {
     .site-footer {
         font-size: 14px;
-        /* Smaller text on small devices */
     }
 }
 

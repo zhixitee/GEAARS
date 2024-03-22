@@ -24,7 +24,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 path('', views.events, name='events'),
-path('events/', include('events.urls')),
+path('events/', include(('events.urls', 'events'), namespace='events')),
 path('admin/', admin.site.urls),
 path('map/', views.map, name='map'),
 path('social-auth/', include('social_django.urls', namespace='social')),
