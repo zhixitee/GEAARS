@@ -6,21 +6,19 @@
 {% endblock %}
 
 {% block body_block %}
-
-<head>
-    <link rel="stylesheet" href="{% static 'cssfiles/about.css' %}">
-</head>
+<link rel="stylesheet" href="{% static 'cssfiles/about.css' %}">
 
 <div class="about-section">
     <h1>About GEAARS</h1>
     <div class="about-image">
         <img src="{% static 'images/about-us.jpg' %}" alt="About GEAARS">
     </div>
-    <p>Welcome to our events platform, GEAARS - Glasgow Events and Arts Review System. This website has been developed to help organize and share upcoming events effectively within the Glasgow community.</p>
-    <p>GEAARS was designed with the goal of providing an easy-to-use space for event organizers and attendees alike. Whether you're looking to create, manage, or attend events, our site is here to support your needs.</p>
-    <p>This initiative is brought to you by our dedicated team of developers and event planners. We are committed to providing a seamless experience for all our users.</p>
-    <p>Thank you for choosing GEAARS for your event management needs. We are constantly working to improve our platform and welcome any feedback you may have.</p>
-    <p>For any inquiries or suggestions, please contact us through our support channel.</p>
+    <p>
+    Welcome to our events platform, GEAARS - Glasgow Events and Arts Review System. This website has been developed to help organize and share upcoming events effectively within the Glasgow community.
+    GEAARS was designed with the goal of providing an easy-to-use space for event organizers and attendees alike. Whether you're looking to create, manage, or attend events, our site is here to support your needs.
+    This initiative is brought to you by our dedicated team of developers and event planners. We are committed to providing a seamless experience for all our users.
+    Thank you for choosing GEAARS for your event management needs. We are constantly working to improve our platform and welcome any feedback you may have.
+    For any inquiries or suggestions, please contact us through our support channel.</p>
 
     {% if user.is_authenticated %}
         <h2>Submit Feedback</h2>
@@ -34,6 +32,3 @@
     {% endif %}
 </div>
 {% endblock %}
-
-
-

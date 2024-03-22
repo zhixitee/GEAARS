@@ -74,7 +74,7 @@
     <!-- Dynamically populated events list -->
     <div class="events-list">
         {% for event in events %}
-        <div class="event-item" onclick='location.href="{% url 'events:choosen_event' event.slug %}";' style="cursor:pointer;">
+        <div class="event-item" onclick=location.href="{% url 'events:choosen_event' event.slug %}"; style="cursor:pointer;">
             <div class="image-container">
                 <img src="{% static 'images/'|add:event.slug|add:'.jpg' %}" alt="{{ event.title }}" />
             </div>
