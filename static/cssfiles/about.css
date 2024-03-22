@@ -4,7 +4,6 @@ body {
     color: #333;
 }
 
-
 .about-section {
     max-width: 1200px;
     margin: -10px auto;
@@ -40,38 +39,3 @@ p {
     margin-bottom: 20px;
     font-weight: 400; 
 }
-
-/* h2 {
-    font-family: 'Oswald', sans-serif;
-    color: #444;
-    font-weight: 700; 
-} */
-
-/* form {
-    text-align: center; 
-    margin-top: 20px; 
-}
-
-form button {
-    background-color: #4e9fde; 
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px; 
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-} 
-
-form button:hover {
-    background-color: #3b8ec2; 
-} */
-
-/* a {
-    color: #4e9fde; 
-    text-decoration: none;
-} */
-
-/* a:hover {
-    text-decoration: underline;
-} */
