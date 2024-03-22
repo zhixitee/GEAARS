@@ -1,101 +1,87 @@
-![Forks](https://img.shields.io/badge/forks-0-blue)
-![Stars](https://img.shields.io/badge/clone-6-yellow)
+![Forks](https://img.shields.io/github/forks/<username>/<repository>?style=social)
+![Stars](https://img.shields.io/github/stars/<username>/<repository>?style=social)
 
-# GEAARS(Glasgow Events And Arts Review System)
+# GEAARS (Glasgow Events And Arts Review System)
 
 ## Description
 
-Welcome to WAD group project setup by team 8D . This is a Event review website hardcoded in python and the Django framework. This website aim in showcasing the latest events happening around in Glasgow in which they can later leave the review for the performance. With this website users can definitely get to know about the events happening around the town. In this users can be both event organiser as well where this website through admin allow their Events post on the website which later can be reviewed by the organisers or the performer through the site. We hope you like the work.
+GEAARS, developed by Team 8D, is a comprehensive event review platform designed with Python and the Django framework. It serves as a central hub for discovering and reviewing events in Glasgow. Users can find details about upcoming events and share their experiences through reviews. The platform also caters to event organizers, allowing them to post and manage events, thereby fostering a vibrant community around Glasgow's cultural scene.
+
+## Features
+
+- **Event Discovery:** Browse the latest events in Glasgow, including concerts, exhibitions, and more.
+- **Reviews:** Share and read reviews of events to gauge experiences and expectations.
+- **Organizer Portal:** Event organizers can post and manage their events, reaching a wider audience.
 
 ## Installation Instructions
 
-1. Change directory to GEAARS folder where it contains manage.py file (command - ls GEAARS) this will tell about the contents of the folder.
+Ensure you have Conda and Python installed on your system before proceeding.
 
-2. 
+1. **Clone the Repository**
 
-```
-conda create --name events
-```
-
-(This command creates the virtual environment name events)
-
-3. 
-
-```
-conda activate events
+```bash
+git clone <repository-url>
+cd GEAARS
 ```
 
-(The command to activate the environment)
+2. **Create and Activate a Virtual Environment**
 
-4. 
-
-```
-   pip install django==3.2
-```
-
-   (This version of django is used in this website development)
-
-5. 
-
-```
-pip install pillow
+```bash
+conda create --name GEAARS python=3.8
+conda activate GEAARS
 ```
 
-(This format is used to manipulate and save many different image formats)
+3. **Install Dependencies**
 
-6. 
-
-```
-pip install social-auth-app-django
+```bash
+pip install -r requirements.txt
 ```
 
-(This format is used to pull user data via Google API)
+4. **Database Migrations**
 
-
-7. 
-
-```
+```bash
 python manage.py makemigrations
-```
-
-(This command is used to automatically make migrations to files that have been changed to make models and updating the database schema) 
-
-8. 
-
-```
 python manage.py migrate
 ```
 
-(This command makes sure that the schema matches the current state of the current models,managing the database changes throughout the lifecycle.)
+5. **Populate the Database**
 
-9. 
-
-```
+```bash
 python populate_events.py
 ```
 
-(This command makes sure that the database is populated properly)
+6. **Run the Server**
 
-10. 
-
-```
+```bash
 python manage.py runserver
 ```
 
-(For running the server )
+Visit `http://localhost:8000` in your web browser to access the application.
 
-11. 
+## Contribution Guidelines
 
-```
-localhost:8000
-```
+1. Fork this repository.
+2. Clone your forked repository to your local machine.
+3. Make your changes and test them locally.
+4. Commit your changes with a clear commit message.
+5. Push your changes to your fork.
+6. Submit a pull request to the original repository.
+7. Wait for your pull request to be reviewed and merged.
 
-(Change everything before ":" to "localhost" to ensure Google API runs properly when signing up and/or login in)  
+## Acknowledgments
 
-## General Instructions
-1. Fork this repository
-2. Clone the forked repository
-3. Add your contributions(if any)
-4. Run the server check the changes.
-5. Commit and push.
-6. Wait for pull request to be merged.
+- Google Maps API for event location features.
+- Bootstrap for responsive design and UI components.
+
+## Team 8D Members
+
+- Alan Gardiner
+- Callum Neilson
+- Edan Hymes
+- Saksham Thukral
+- Tareq Lgried
+- Zhi Xi Tee
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
