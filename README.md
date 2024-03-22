@@ -20,7 +20,7 @@ Ensure you have Conda and Python installed on your system before proceeding.
 1. **Clone the Repository**
 
 ```bash
-git clone <repository-url>
+git clone < https://github.com/zhixitee/GEAARS.git >
 cd GEAARS
 ```
 
